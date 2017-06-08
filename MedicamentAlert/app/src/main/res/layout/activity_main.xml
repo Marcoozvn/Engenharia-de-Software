@@ -4,36 +4,120 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#E0E0E0"
+    android:padding="16dp"
     tools:context="com.example.marcos.medicamentalert.MainActivity">
-    
-    <TextView
+
+    <RelativeLayout
+        android:layout_width="336dp"
+        android:background="#FAFAFA"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        tools:layout_editor_absoluteY="16dp"
+        tools:layout_editor_absoluteX="8dp">
+
+        <TextView
+            android:id="@+id/textView_nomeMedicamento"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nome do Medicamento"
+            android:paddingBottom="8dp"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:textColor="@color/colorPrimary"
+            />
+
+        <EditText
+            android:id="@+id/form_nomeMedicamento"
+            android:hint="digite aqui o nome do medicamento"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textView_nomeMedicamento" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="336dp"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:background="#FAFAFA"
+        tools:layout_editor_absoluteY="155dp"
+        tools:layout_editor_absoluteX="8dp">
+
+        <TextView
+            android:id="@+id/textView_horarioLembrete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="8dp"
+            android:text="Horário do lembrete"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:textColor="@color/colorPrimary"/>
+
+        <Switch
+            android:id="@+id/switch_acionarAlarme"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true" />
+
+        <TextView
+            android:id="@+id/temporario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ExpandableListView aqui!"
+            android:paddingBottom="8dp"
+            android:textAllCaps="true"
+            android:layout_below="@id/textView_horarioLembrete"/>
+
+        <TextClock
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/temporario"
+            android:textColor="@color/colorPrimary"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="336dp"
+        android:layout_height="wrap_content"
+        tools:layout_editor_absoluteY="300dp"
+        android:padding="16dp"
+        android:background="#FAFAFA"
+        tools:layout_editor_absoluteX="8dp">
+
+        <TextView
+            android:id="@+id/textView_dosagem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Dosagem"
+            android:paddingBottom="8dp"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:textColor="@color/colorPrimary"/>
+
+        <EditText
+            android:id="@+id/form_quantidadeDosagem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="digite a quantidade"
+            android:paddingRight="8dp"
+            android:layout_below="@id/textView_dosagem"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ExpandableListView "
+            android:layout_toRightOf="@id/form_quantidadeDosagem"
+            android:layout_alignBaseline="@id/form_quantidadeDosagem"/>
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/salvar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Cadastro de Medicamento"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-        tools:layout_editor_absoluteY="16dp"
-        tools:layout_editor_absoluteX="49dp" />
-
-    <EditText
-        android:id="@+id/nome_medicamento"
-        android:inputType="textPersonName"
-        android:paddingLeft="16dp"
-        android:hint="Nome"
-        android:layout_width="368dp"
-        android:layout_height="64dp"
-        android:maxLines="1"
-        tools:layout_editor_absoluteY="70dp"
-        tools:layout_editor_absoluteX="8dp" />
-    
-    <EditText
-        android:id="@+id/descricao_medicamento"
-        android:inputType="textMultiLine"
-        android:hint="Descrição"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        tools:layout_editor_absoluteY="80dp"
-        tools:layout_editor_absoluteX="90dp" />
-
+        android:text="Salvar"
+        android:background="@color/colorPrimary"
+        tools:layout_editor_absoluteY="425dp"
+        tools:layout_editor_absoluteX="256dp" />
 
 
 </android.support.constraint.ConstraintLayout>
