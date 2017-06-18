@@ -1,21 +1,16 @@
 package com.example.marcos.medicamentalert;
 
-import android.support.v4.app.DialogFragment;
-import android.support.v4.app.FragmentTransaction;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ExpandableListView;
 import android.widget.Spinner;
 import android.widget.TextClock;
-import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private ArrayList<Medicamento> medicamentos = new ArrayList<>();
@@ -47,15 +42,14 @@ public class MainActivity extends AppCompatActivity {
         salvar.setOnClickListener(salvarOnClickListener);
 
         TextClock textClock = (TextClock) findViewById(R.id.textClock);
-        textClock.setOnClickListener(dialogFragmentOnClickListener);
+        textClock.setOnClickListener(escolheHorarioOnClickListener);
     }
 
-    private View.OnClickListener dialogFragmentOnClickListener = new View.OnClickListener() {
+    private View.OnClickListener escolheHorarioOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            CustomDialogFragment dialogFragment = new CustomDialogFragment();
-            dialogFragment.show(fragmentTransaction, "");
+            TimePickerFragment dialogFragment = new TimePickerFragment();
+            dialogFragment.show(getFragmentManager(), "TimePicker");
         }
     };
 
