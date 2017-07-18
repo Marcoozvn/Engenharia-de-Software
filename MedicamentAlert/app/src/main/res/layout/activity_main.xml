@@ -12,8 +12,6 @@
         android:background="#E0E0E0"
         android:padding="16dp"
         tools:context="com.example.marcos.medicamentalert.MainActivity"
-        tools:layout_editor_absoluteY="81dp"
-        tools:layout_editor_absoluteX="0dp"
         android:scrollbars="vertical">
 
         <RelativeLayout
@@ -23,6 +21,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:background="#FAFAFA"
+            android:elevation="2dp"
             android:padding="16dp"
             android:layout_marginLeft="8dp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -51,24 +50,16 @@
                 android:layout_below="@id/textView_nomeMedicamento"
                 android:hint="Digite o nome do medicamento"
                 />
-
-            <TextView
-                android:id="@+id/textView_nomeMedico"
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nome do Médico"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-                android:textColor="@color/colorPrimary"
                 android:layout_below="@id/form_nomeMedicamento"
-                android:paddingTop="8dp"/>
+                android:text="Adicionar Consulta"
+                android:textColor="@color/colorPrimary"
+                android:textAllCaps="false"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_alignParentRight="true"/>
 
-            <EditText
-                android:id="@+id/form_nomeMedico"
-                android:layout_width="wrap_content"
-                android:backgroundTint="@color/colorPrimary"
-                android:layout_height="match_parent"
-                android:layout_below="@id/textView_nomeMedico"
-                android:hint="Digite o nome do médico"/>
 
         </RelativeLayout>
 
@@ -78,7 +69,9 @@
             android:layout_height="wrap_content"
             android:text="Salvar"
             android:background="@color/colorPrimary"
+            android:textColor="#ffffff"
             android:layout_marginEnd="8dp"
+            android:elevation="2dp"
             android:layout_marginRight="8dp"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginTop="8dp"
@@ -96,6 +89,7 @@
             android:layout_marginRight="8dp"
             android:layout_marginStart="8dp"
             android:background="#FAFAFA"
+            android:elevation="2dp"
             android:padding="16dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -134,6 +128,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/spinner"
+                android:paddingBottom="8dp"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                 android:textColor="@color/colorPrimary" />
 
@@ -146,6 +141,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:background="#FAFAFA"
+            android:elevation="2dp"
             android:padding="16dp"
             android:layout_marginLeft="8dp"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -169,12 +165,13 @@
                 android:textColor="@color/colorPrimary" />
 
             <EditText
+                android:inputType="numberDecimal"
                 android:id="@+id/form_quantidadeDosagem"
                 android:backgroundTint="@color/colorPrimary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/textView_dosagem"
-                android:hint="digite a quantidade"
+                android:hint="Digite a quantidade"
                 android:paddingRight="8dp" />
 
             <Spinner

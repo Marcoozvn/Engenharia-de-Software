@@ -1,6 +1,11 @@
 package com.example.marcos.medicamentalert;
 
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +16,7 @@ import android.widget.Spinner;
 import android.widget.TextClock;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
     private ArrayList<Medicamento> medicamentos = new ArrayList<>();
@@ -43,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         TextClock textClock = (TextClock) findViewById(R.id.textClock);
         textClock.setOnClickListener(escolheHorarioOnClickListener);
+
     }
 
     private View.OnClickListener escolheHorarioOnClickListener = new View.OnClickListener() {
@@ -56,19 +63,57 @@ public class MainActivity extends AppCompatActivity {
     private View.OnClickListener salvarOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            Boolean camposPreenchidos = true;
             EditText viewNomeMedicamento = (EditText) findViewById(R.id.form_nomeMedicamento);
-            EditText viewNomeMedico = (EditText) findViewById(R.id.form_nomeMedico);
+            if( viewNomeMedicamento.getText().toString().length() == 0 ) {
+                camposPreenchidos = false;
+                viewNomeMedicamento.setError("Por favor, digite o nome do medicamento!");
+            }
+            //EditText viewNomeMedico = (EditText) findViewById(R.id.form_nomeMedico);
             EditText viewDosagem = (EditText) findViewById(R.id.form_quantidadeDosagem);
-            Spinner spinnerDosagem = (Spinner) findViewById(R.id.spinnerDosagem);
+            if( viewDosagem.getText().toString().length() == 0 ) {
+                camposPreenchidos = false;
+                viewDosagem.setError("Por favor, digite a dosagem!");
+            }
 
-            String nomeMedicamento = viewNomeMedicamento.getText().toString();
-            String nomeMedico = viewNomeMedico.getText().toString();
-            String dosagem = viewDosagem.getText().toString();
-            String dosagemMetrica = spinnerDosagem.getSelectedItem().toString();
+            if (camposPreenchidos) {
+                Spinner spinnerDosagem = (Spinner) findViewById(R.id.spinnerDosagem);
+                String nomeMedicamento = viewNomeMedicamento.getText().toString();
+                //String nomeMedico = viewNomeMedico.getText().toString();
+                String dosagem = viewDosagem.getText().toString();
+                String dosagemMetrica = spinnerDosagem.getSelectedItem().toString();
 
-            Medicamento medicamento = new Medicamento(nomeMedicamento, nomeMedico, Integer.valueOf(dosagem), dosagemMetrica);
-            medicamentos.add(medicamento);
+                Medicamento medicamento = new Medicamento(nomeMedicamento, Integer.valueOf(dosagem), dosagemMetrica);
+                medicamentos.add(medicamento);
+
+                TextClock textClock = (TextClock) findViewById(R.id.textClock);
+
+                AlarmManager gerenciador = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                Calendar cal = Calendar.getInstance();
+
+                String stringHour = textClock.getText().toString();
+                cal.set(Calendar.HOUR_OF_DAY, Integer.valueOf(stringHour.substring(0, 2)));
+                cal.set(Calendar.MINUTE, Integer.valueOf(stringHour.substring(3)));
+                //cal.set(Calendar.SECOND, 0);
+                //cal.set(Calendar.MILLISECOND, 0);
+
+                if (cal.getTimeInMillis() < System.currentTimeMillis()) {
+                    cal.add(Calendar.DAY_OF_YEAR, 1);
+                }
+
+                gerenciador.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),
+                        AlarmManager.INTERVAL_DAY, obterIntentPendente(MainActivity.this));
+
+            }
         }
     };
+
+    private static PendingIntent obterIntentPendente(Context contexto) {
+
+        Intent i = new Intent(contexto, ReceptorAlarme.class);
+        i.putExtra("Ringtone",
+                Uri.parse("getResources().getResourceName(R.raw.shankh_final_mid)"));
+        return PendingIntent.getBroadcast(contexto, 0, i, 0);
+    }
 
 }
