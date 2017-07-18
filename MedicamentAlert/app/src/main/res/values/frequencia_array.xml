@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="frequencia_array">
+        <item>Uma vez ao dia</item>
+        <item>Duas vezes ao dia</item>
+        <item>Três vezes ao dia</item>
+        <item>Quatro vezes ao dia</item>
+        <item>Cinco vezes ao dia</item>
+        <item>Seis vezes ao dia</item>
+        <item>Sete vezes ao dia</item>
+        <item>Oito vezes ao dia</item>
+        <item>Nove vezes ao dia</item>
+        <item>Dez vezes ao dia</item>
+    </string-array>
+</resources>
