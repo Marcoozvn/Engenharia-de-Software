@@ -2,12 +2,17 @@ package com.example.marcos.medicamentalert;
 
 
 import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.NotificationCompat;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -17,6 +22,7 @@ import android.widget.TextClock;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
     private ArrayList<Medicamento> medicamentos = new ArrayList<>();
@@ -86,28 +92,50 @@ public class MainActivity extends AppCompatActivity {
                 Medicamento medicamento = new Medicamento(nomeMedicamento, Integer.valueOf(dosagem), dosagemMetrica);
                 medicamentos.add(medicamento);
 
-                TextClock textClock = (TextClock) findViewById(R.id.textClock);
-
-                AlarmManager gerenciador = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                Calendar cal = Calendar.getInstance();
-
-                String stringHour = textClock.getText().toString();
-                cal.set(Calendar.HOUR_OF_DAY, Integer.valueOf(stringHour.substring(0, 2)));
-                cal.set(Calendar.MINUTE, Integer.valueOf(stringHour.substring(3)));
-                //cal.set(Calendar.SECOND, 0);
-                //cal.set(Calendar.MILLISECOND, 0);
-
-                if (cal.getTimeInMillis() < System.currentTimeMillis()) {
-                    cal.add(Calendar.DAY_OF_YEAR, 1);
-                }
-
-                gerenciador.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),
-                        AlarmManager.INTERVAL_DAY, obterIntentPendente(MainActivity.this));
+                configuraAlarme();
 
             }
         }
     };
 
+    private void configuraAlarme() {
+        TextClock textClock = (TextClock) findViewById(R.id.textClock);
+
+        AlarmManager gerenciador = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Calendar cal = Calendar.getInstance();
+
+        String stringHour = textClock.getText().toString();
+        cal.set(Calendar.HOUR_OF_DAY, Integer.valueOf(stringHour.substring(0, 2)));
+        cal.set(Calendar.MINUTE, Integer.valueOf(stringHour.substring(3)));
+        //cal.set(Calendar.SECOND, 0);
+        //cal.set(Calendar.MILLISECOND, 0);
+
+        if (cal.getTimeInMillis() < System.currentTimeMillis()) {
+            cal.add(Calendar.DAY_OF_YEAR, 1);
+        }
+        geraNotificacao();
+        //gerenciador.setRepeating(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(),
+                //AlarmManager.INTERVAL_DAY, obterIntentPendente(MainActivity.this));
+    }
+
+    private void geraNotificacao(){
+        NotificationManager nm = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        PendingIntent pi = PendingIntent.getActivity(this, 0, new Intent(this, AlarmeActivity.class), 0);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        builder.setTicker("Hora do medicamento!");
+        builder.setContentTitle("Medicament Alarm");
+        builder.setContentText("Texto");
+        builder.setSmallIcon(android.R.drawable.ic_media_play);
+        builder.setContentIntent(pi);
+
+        Notification notification = builder.build();
+        notification.vibrate = new long[]{150, 300, 150, 600};
+        nm.notify(1, notification);
+
+        Intent intentRingtone = new Intent(this, RingtoneService.class);
+        this.startService(intentRingtone);
+    }
     private static PendingIntent obterIntentPendente(Context contexto) {
 
         Intent i = new Intent(contexto, ReceptorAlarme.class);

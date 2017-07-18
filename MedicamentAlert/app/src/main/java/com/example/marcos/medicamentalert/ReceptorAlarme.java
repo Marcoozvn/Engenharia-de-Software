@@ -15,7 +15,6 @@ public class ReceptorAlarme extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         Intent i = new Intent(context, AlarmeActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        i.getParcelableExtra("Ringtone");
         context.startActivity(i);
     }
 
