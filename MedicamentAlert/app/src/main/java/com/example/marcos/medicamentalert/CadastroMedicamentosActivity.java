@@ -13,21 +13,26 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextClock;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 
 public class CadastroMedicamentosActivity extends AppCompatActivity {
     private ArrayList<Medicamento> medicamentos = new ArrayList<>();
+    private int ultimoTextClock = R.id.textClock;
+    private int numTextClocks = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cadastro_medicamentos);
-
+        /*
         Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(myToolbar);
 
@@ -39,7 +44,7 @@ public class CadastroMedicamentosActivity extends AppCompatActivity {
         adapterSpinnerFrequencia.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         spinnerFrequencia.setAdapter(adapterSpinnerFrequencia);
-
+        */
         Spinner spinnerDosagem = (Spinner) findViewById(R.id.spinnerDosagem);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapterSpinnerDosagem = ArrayAdapter.createFromResource(this,
@@ -52,15 +57,56 @@ public class CadastroMedicamentosActivity extends AppCompatActivity {
         Button salvar = (Button) findViewById(R.id.salvar);
         salvar.setOnClickListener(salvarOnClickListener);
 
+        Button adicionaHorario = (Button) findViewById(R.id.botaoAdicionaHorario);
+        adicionaHorario.setOnClickListener(adicionaHorarioOnClickListener);
         TextClock textClock = (TextClock) findViewById(R.id.textClock);
         textClock.setOnClickListener(escolheHorarioOnClickListener);
 
     }
 
+    
+    // ARRUMAR ISSO AQUI! (Tamanho, fonte, padding, posição do botão)
+    private View.OnClickListener adicionaHorarioOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout3);
+            TextClock textClockaux = new TextClock(getApplicationContext());
+            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+            layoutParams.addRule(RelativeLayout.BELOW, ultimoTextClock);
+            textClockaux.setLayoutParams(layoutParams);
+            switch (numTextClocks){
+                case 1:
+                    textClockaux.setId(R.id.textClock2);
+                    break;
+                case 2:
+                    textClockaux.setId(R.id.textClock3);
+                    break;
+                case 3:
+                    textClockaux.setId(R.id.textClock4);
+                    break;
+                case 5:
+                    textClockaux.setId(R.id.textClock5);
+                    break;
+                case 6:
+                    textClockaux.setId(R.id.textClock6);
+                    break;
+                case 7:
+                    textClockaux.setId(R.id.textClock7);
+                    break;
+            }
+
+            textClockaux.setTextColor(getResources().getColor(R.color.colorPrimary));
+            relativeLayout.addView(textClockaux);
+            textClockaux.setOnClickListener(escolheHorarioOnClickListener);
+            ultimoTextClock = textClockaux.getId();
+            numTextClocks++;
+        }
+    };
+
     private View.OnClickListener escolheHorarioOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            TimePickerFragment dialogFragment = new TimePickerFragment();
+            TimePickerFragment dialogFragment = new TimePickerFragment(v);
             dialogFragment.show(getFragmentManager(), "TimePicker");
         }
     };

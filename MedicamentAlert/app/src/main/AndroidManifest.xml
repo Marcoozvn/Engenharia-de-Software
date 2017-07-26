@@ -16,7 +16,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CadastroMedicamentosActivity" android:theme="@style/Theme.AppCompat.NoActionBar"/>
+        <activity android:name=".CadastroMedicamentosActivity"/>
         <activity android:theme="@style/Theme.AppCompat.Light.Dialog.MinWidth" android:name=".AlarmeActivity"></activity>
         <receiver android:name=".ReceptorAlarme">
         </receiver>

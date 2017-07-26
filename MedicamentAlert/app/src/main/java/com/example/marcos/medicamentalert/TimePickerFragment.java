@@ -8,6 +8,7 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.text.format.DateFormat;
+import android.view.View;
 import android.widget.TextClock;
 import android.app.DialogFragment;
 import android.app.Dialog;
@@ -20,6 +21,17 @@ import android.widget.TimePicker;
  */
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener{
     private Bundle bundle = getArguments();
+    private TextClock textClock;
+
+    public TimePickerFragment(){
+        super();
+    }
+
+    public TimePickerFragment(View textClock){
+        super();
+        this.textClock = (TextClock) textClock;
+
+    }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState){
@@ -38,7 +50,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
     public void onTimeSet(TimePicker view, int hourOfDay, int minute){
         String hourString;
         String minuteString;
-        TextClock textClock = (TextClock) getActivity().findViewById(R.id.textClock);
+        //TextClock textClock = (TextClock) getActivity().findViewById(R.id.textClock);
         if (hourOfDay < 10){
             hourString = "0" + hourOfDay;
         } else { hourString = "" + hourOfDay;}
