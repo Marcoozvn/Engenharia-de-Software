@@ -1,4 +1,4 @@
-package com.example.marcos.medicamentalert;
+package models;
 
 /**
  * Created by Marcos on 17/06/2017.

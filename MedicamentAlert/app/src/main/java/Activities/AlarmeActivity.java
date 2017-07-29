@@ -1,4 +1,4 @@
-package com.example.marcos.medicamentalert;
+package Activities;
 
 /**
  * Created by Marcos on 17/07/2017.
@@ -6,6 +6,8 @@ package com.example.marcos.medicamentalert;
 
 import android.app.Activity;
 import android.os.Bundle;
+
+import com.example.marcos.medicamentalert.R;
 
 public class AlarmeActivity extends Activity {
 

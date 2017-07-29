@@ -1,4 +1,4 @@
-package com.example.marcos.medicamentalert;
+package Activities;
 
 
 import android.app.AlarmManager;
@@ -15,8 +15,14 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextClock;
 
+import com.example.marcos.medicamentalert.R;
+import com.example.marcos.medicamentalert.ReceptorAlarme;
+import com.example.marcos.medicamentalert.TimePickerFragment;
+
 import java.util.ArrayList;
 import java.util.Calendar;
+
+import models.Medicamento;
 
 public class MainActivity extends AppCompatActivity {
     private ArrayList<Medicamento> medicamentos = new ArrayList<>();
@@ -25,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         Spinner spinnerFrequencia = (Spinner) findViewById(R.id.spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout

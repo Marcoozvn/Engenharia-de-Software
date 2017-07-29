@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">MedicamentAlert</string>
+    <string name="app_name">Medicament Alert</string>
+    <string name="title_activity_consulta">Consulta</string>
 </resources>
