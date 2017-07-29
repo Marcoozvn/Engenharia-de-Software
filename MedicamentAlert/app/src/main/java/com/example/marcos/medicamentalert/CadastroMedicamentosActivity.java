@@ -22,10 +22,12 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CadastroMedicamentosActivity extends AppCompatActivity {
     private ArrayList<Medicamento> medicamentos = new ArrayList<>();
-    private int ultimoTextClock = R.id.textClock;
+    private int ultimoTextClock = R.id.textClock1;
     private int numTextClocks = 1;
 
     @Override
@@ -59,47 +61,49 @@ public class CadastroMedicamentosActivity extends AppCompatActivity {
 
         Button adicionaHorario = (Button) findViewById(R.id.botaoAdicionaHorario);
         adicionaHorario.setOnClickListener(adicionaHorarioOnClickListener);
-        TextClock textClock = (TextClock) findViewById(R.id.textClock);
+        TextClock textClock = (TextClock) findViewById(R.id.textClock1);
         textClock.setOnClickListener(escolheHorarioOnClickListener);
 
     }
 
-    
+
     // ARRUMAR ISSO AQUI! (Tamanho, fonte, padding, posição do botão)
     private View.OnClickListener adicionaHorarioOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout3);
-            TextClock textClockaux = new TextClock(getApplicationContext());
-            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            layoutParams.addRule(RelativeLayout.BELOW, ultimoTextClock);
-            textClockaux.setLayoutParams(layoutParams);
-            switch (numTextClocks){
-                case 1:
-                    textClockaux.setId(R.id.textClock2);
-                    break;
-                case 2:
-                    textClockaux.setId(R.id.textClock3);
-                    break;
-                case 3:
-                    textClockaux.setId(R.id.textClock4);
-                    break;
-                case 5:
-                    textClockaux.setId(R.id.textClock5);
-                    break;
-                case 6:
-                    textClockaux.setId(R.id.textClock6);
-                    break;
-                case 7:
-                    textClockaux.setId(R.id.textClock7);
-                    break;
-            }
+            if (numTextClocks < 7){
+                RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout3);
+                TextClock textClockaux = new TextClock(getApplicationContext());
+                RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+                layoutParams.addRule(RelativeLayout.BELOW, ultimoTextClock);
+                textClockaux.setLayoutParams(layoutParams);
+                switch (numTextClocks){
+                    case 1:
+                        textClockaux.setId(R.id.textClock2);
+                        break;
+                    case 2:
+                        textClockaux.setId(R.id.textClock3);
+                        break;
+                    case 3:
+                        textClockaux.setId(R.id.textClock4);
+                        break;
+                    case 4:
+                        textClockaux.setId(R.id.textClock5);
+                        break;
+                    case 5:
+                        textClockaux.setId(R.id.textClock6);
+                        break;
+                    case 6:
+                        textClockaux.setId(R.id.textClock7);
+                        break;
+                }
 
-            textClockaux.setTextColor(getResources().getColor(R.color.colorPrimary));
-            relativeLayout.addView(textClockaux);
-            textClockaux.setOnClickListener(escolheHorarioOnClickListener);
-            ultimoTextClock = textClockaux.getId();
-            numTextClocks++;
+                textClockaux.setTextColor(getResources().getColor(R.color.colorPrimary));
+                relativeLayout.addView(textClockaux);
+                textClockaux.setOnClickListener(escolheHorarioOnClickListener);
+                ultimoTextClock = textClockaux.getId();
+                numTextClocks++;
+            }
         }
     };
 
@@ -135,19 +139,50 @@ public class CadastroMedicamentosActivity extends AppCompatActivity {
                 String dosagemMetrica = spinnerDosagem.getSelectedItem().toString();
 
                 Medicamento medicamento = new Medicamento(nomeMedicamento, Integer.valueOf(dosagem), dosagemMetrica);
-                medicamentos.add(medicamento);
+                Map<String, Boolean> alarmes = new HashMap<>();
+                for (int i = 1; i <= numTextClocks; i++){
+                    System.out.print(numTextClocks + " - " + i);
+                    TextClock textclock = (TextClock) findViewById(retornaId(i));
+                    alarmes.put(textclock.getText().toString(), false);
+                }
+                medicamento.setAlarmes(alarmes);
+
+                MainActivity.bd.addMedicamento(medicamento);
 
                 Switch switchAlarme = (Switch) findViewById(R.id.switch_acionarAlarme);
                 if (switchAlarme.isChecked()){
-                    configuraAlarme();
+                    for (int i = 1; i <= numTextClocks; i++){
+                        TextClock textclock = (TextClock) findViewById(retornaId(i));
+                        configuraAlarme(textclock);
+                    }
                 }
+                finish();
 
             }
         }
     };
 
-    private void configuraAlarme() {
-        TextClock textClock = (TextClock) findViewById(R.id.textClock);
+    private int retornaId(int i){
+        switch (i){
+            case 1:
+                return R.id.textClock1;
+            case 2:
+                return R.id.textClock2;
+            case 3:
+                return R.id.textClock3;
+            case 4:
+                return R.id.textClock4;
+            case 5:
+                return R.id.textClock5;
+            case 6:
+                return R.id.textClock6;
+            case 7:
+                return R.id.textClock7;
+        }
+        return 0;
+    }
+
+    private void configuraAlarme(TextClock textClock) {
         Intent i = new Intent(this, ReceptorAlarme.class);
         PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, 0);
         AlarmManager gerenciador = (AlarmManager) getSystemService(Context.ALARM_SERVICE);

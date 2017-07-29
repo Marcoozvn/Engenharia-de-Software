@@ -2,15 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <Button
-        android:id="@+id/cadastroMedicamentos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="cadastro"/>
 
-    <Button
-        android:id="@+id/listaMedicamentos"
+    <TextView
+        android:id="@+id/tvNome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Listagem" />
+        android:text="Nome"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
+
+    <TextView
+        android:id="@+id/tvDosagem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Dosagem" />
 </LinearLayout>

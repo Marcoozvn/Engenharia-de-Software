@@ -1,20 +1,26 @@
 package com.example.marcos.medicamentalert;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Marcos on 17/06/2017.
  */
 
 public class Medicamento {
-
+    int codigo;
     private String nome;
     //private String medicoResponsavel;
     private double dosagem;
     private String metricaDosagem;
+    private Map<String, Boolean> alarmes;
 
     public Medicamento(String nome, double dosagem, String metricaDosagem){
+        this.codigo = this.hashCode();
         this.nome = nome;
         //this.medicoResponsavel = medicoResponsavel;
         this.dosagem = dosagem;
+        this.alarmes = new HashMap<>();
         this.metricaDosagem = metricaDosagem;
     }
 
@@ -25,4 +31,18 @@ public class Medicamento {
     public double getDosagem(){return dosagem;}
 
     public String getMetricaDosagem(){ return metricaDosagem;}
+
+    public int getCodigo(){return codigo;}
+
+    public void setAlarmes(Map<String, Boolean> alarmes){
+        this.alarmes = alarmes;
+    }
+
+    public void tomouMedicamento(String horario){
+        alarmes.replace(horario, false, true);
+    }
+
+    public Map<String, Boolean> getAlarmes(){
+        return  this.alarmes;
+    }
 }
