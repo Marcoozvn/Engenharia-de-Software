@@ -20,6 +20,7 @@ import android.widget.TimePicker;
  * A simple {@link Fragment} subclass.
  */
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener{
+
     private Bundle bundle = getArguments();
     private TextClock textClock;
 
@@ -62,4 +63,5 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         textClock.setText(hourString + ":" + minuteString);
 
     }
+
 }

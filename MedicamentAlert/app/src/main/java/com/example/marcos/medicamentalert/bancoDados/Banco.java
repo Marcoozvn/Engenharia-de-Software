@@ -2,10 +2,14 @@ package com.example.marcos.medicamentalert.bancoDados;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.marcos.medicamentalert.Medicamento;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Marcos on 27/07/2017.
@@ -13,7 +17,7 @@ import com.example.marcos.medicamentalert.Medicamento;
 
 public class Banco extends SQLiteOpenHelper{
     private static final int VERSAO_BANCO = 1;
-    private static final String BD_MEDICAMENTOS = "bancoDeDados";
+    private static final String BD_MEDICAMENTOS = "bancoDeDados2";
     private static final String TABELA_MEDICAMENTOS = "tabela_medicamentos";
     private static final String TABELA_HORARIOS = "tabela_horarios";
     private static final String COLUNA_CODIGO = "_id";
@@ -34,6 +38,7 @@ public class Banco extends SQLiteOpenHelper{
         String QUERY_COLUNA2 = "CREATE TABLE " + TABELA_HORARIOS + "( " + COLUNA_HORARIO + " TEXT, " +
                 COLUNA_STATUS + " BOOLEAN, " + COLUNA_CODIGO + " INTEGER," +
                 " FOREIGN KEY(" + COLUNA_CODIGO + ") REFERENCES tabela_medicamentos(" + COLUNA_CODIGO +"))";
+        //Criar aqui tabela de consultas
         db.execSQL(QUERY_COLUNA);
         db.execSQL(QUERY_COLUNA2);
     }
@@ -62,10 +67,33 @@ public class Banco extends SQLiteOpenHelper{
         db.close();
     }
 
+    public List<Medicamento> getMedicamentosNoBanco(){
+        List<Medicamento> medicamentos = new ArrayList<>();
+        Cursor cursor = this.getWritableDatabase().rawQuery("SELECT * FROM " + TABELA_MEDICAMENTOS, null);
+        while (cursor.moveToNext()){
+            int id = cursor.getInt(cursor.getColumnIndex(COLUNA_CODIGO));
+            String nome = cursor.getString(cursor.getColumnIndex(COLUNA_NOME));
+            float dosagem = cursor.getFloat(cursor.getColumnIndex(COLUNA_DOSAGEM));
+            String metricaDosagem = cursor.getString(cursor.getColumnIndex(COLUNA_METRICADOSAGEM));
+            Medicamento medicamento = new Medicamento(nome, dosagem, metricaDosagem);
+            medicamento.setCodigo(id);
+            medicamentos.add(medicamento);
+        }
+        cursor.close();
+        return medicamentos;
+    }
+
     public void removeMedicamento(Medicamento medicamento){
         SQLiteDatabase db = this.getWritableDatabase();
-
+        int codigo = medicamento.getCodigo();
         db.delete(TABELA_MEDICAMENTOS, COLUNA_CODIGO + " = ?", new String[]{String.valueOf(medicamento.getCodigo())});
+        /*
+        Cursor cursor = this.getWritableDatabase().rawQuery("SELECT * FROM " + TABELA_HORARIOS +
+                " ON " + COLUNA_CODIGO + "=" + codigo, null);
+        while (cursor.moveToNext()){
+            db.delete(TABELA_HORARIOS, COLUNA_CODIGO + " = ?", new String[]{String.valueOf(codigo)});
+        }
+        */
         db.close();
     }
 

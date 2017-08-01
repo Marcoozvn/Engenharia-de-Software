@@ -26,7 +26,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CadastroMedicamentosActivity extends AppCompatActivity {
-    private ArrayList<Medicamento> medicamentos = new ArrayList<>();
     private int ultimoTextClock = R.id.textClock1;
     private int numTextClocks = 1;
 
@@ -34,10 +33,13 @@ public class CadastroMedicamentosActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cadastro_medicamentos);
-        /*
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
 
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.mytoolbar);
+        setSupportActionBar(myToolbar);
+        getSupportActionBar().setTitle("Cadastro de Medicamentos");
+        myToolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_clear_white_24dp));
+        myToolbar.setNavigationOnClickListener(listagemOnClickListener);
+        /*
         Spinner spinnerFrequencia = (Spinner) findViewById(R.id.spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapterSpinnerFrequencia = ArrayAdapter.createFromResource(this,
@@ -65,6 +67,15 @@ public class CadastroMedicamentosActivity extends AppCompatActivity {
         textClock.setOnClickListener(escolheHorarioOnClickListener);
 
     }
+
+    private View.OnClickListener listagemOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Intent intent = new Intent(getApplicationContext(), listaMedicamentosActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            getApplicationContext().startActivity(intent);
+        }
+    };
 
 
     // ARRUMAR ISSO AQUI! (Tamanho, fonte, padding, posição do botão)
@@ -98,7 +109,9 @@ public class CadastroMedicamentosActivity extends AppCompatActivity {
                         break;
                 }
 
+                textClockaux.setTextAppearance(getApplicationContext(), android.R.style.TextAppearance_Large);
                 textClockaux.setTextColor(getResources().getColor(R.color.colorPrimary));
+                textClockaux.setPadding(0, 0, 0, 8);
                 relativeLayout.addView(textClockaux);
                 textClockaux.setOnClickListener(escolheHorarioOnClickListener);
                 ultimoTextClock = textClockaux.getId();
@@ -147,7 +160,8 @@ public class CadastroMedicamentosActivity extends AppCompatActivity {
                 }
                 medicamento.setAlarmes(alarmes);
 
-                MainActivity.bd.addMedicamento(medicamento);
+                listaMedicamentosActivity.bd.addMedicamento(medicamento);
+                listaMedicamentosActivity.adapter.adicionaMedicamento(medicamento);
 
                 Switch switchAlarme = (Switch) findViewById(R.id.switch_acionarAlarme);
                 if (switchAlarme.isChecked()){

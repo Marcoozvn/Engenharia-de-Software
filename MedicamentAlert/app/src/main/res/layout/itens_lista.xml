@@ -1,18 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="8dp">
+
 
     <TextView
-        android:id="@+id/tvNome"
-        android:layout_width="match_parent"
+        android:id="@+id/nomeMedicamento"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Nome"
-        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"/>
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:text="TextView"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
-    <TextView
-        android:id="@+id/tvDosagem"
-        android:layout_width="match_parent"
+    <ImageButton
+        android:id="@+id/deletaMedicamento"
+        android:layout_width="48dp"
         android:layout_height="wrap_content"
-        android:text="Dosagem" />
-</LinearLayout>
+        app:srcCompat="@drawable/ic_delete_black_24dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        style="?android:attr/borderlessButtonStyle"/>
+
+    <ImageButton
+        android:id="@+id/infoMedicamento"
+        android:layout_width="48dp"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_info_outline_black_24dp"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/deletaMedicamento"
+        android:layout_toStartOf="@+id/deletaMedicamento" />
+</RelativeLayout>

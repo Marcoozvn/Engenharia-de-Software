@@ -11,11 +11,11 @@ public class Medicamento {
     int codigo;
     private String nome;
     //private String medicoResponsavel;
-    private double dosagem;
+    private float dosagem;
     private String metricaDosagem;
     private Map<String, Boolean> alarmes;
 
-    public Medicamento(String nome, double dosagem, String metricaDosagem){
+    public Medicamento(String nome, float dosagem, String metricaDosagem){
         this.codigo = this.hashCode();
         this.nome = nome;
         //this.medicoResponsavel = medicoResponsavel;
@@ -28,11 +28,15 @@ public class Medicamento {
 
     //public String getMedicoResponsavel(){ return medicoResponsavel;}
 
-    public double getDosagem(){return dosagem;}
+    public float getDosagem(){return dosagem;}
 
     public String getMetricaDosagem(){ return metricaDosagem;}
 
     public int getCodigo(){return codigo;}
+
+    public void setCodigo(int codigo){
+        this.codigo = codigo;
+    }
 
     public void setAlarmes(Map<String, Boolean> alarmes){
         this.alarmes = alarmes;
