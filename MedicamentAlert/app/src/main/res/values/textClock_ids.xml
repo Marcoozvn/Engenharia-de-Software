@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="textClock1" type="id"/>
+    <item name="textClock2" type="id"/>
+    <item name="textClock3" type="id"/>
+    <item name="textClock4" type="id"/>
+    <item name="textClock5" type="id"/>
+    <item name="textClock6" type="id"/>
+    <item name="textClock7" type="id"/>
+</resources>
