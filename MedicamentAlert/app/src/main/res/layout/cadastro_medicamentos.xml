@@ -12,7 +12,7 @@
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
-            android:id="@+id/mytoolbar"
+            android:id="@+id/mytoolbarCadastro"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
@@ -23,7 +23,7 @@
 
 
     <ScrollView
-        android:id="@+id/ScrollView01"
+        android:id="@+id/ScrollViewCadastro"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
 
@@ -36,7 +36,7 @@
             android:scrollbars="vertical">
 
             <Button
-                android:id="@+id/salvar"
+                android:id="@+id/salvarCadastro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Salvar"
@@ -71,7 +71,7 @@
                 tools:layout_constraintLeft_creator="1">
 
                 <TextView
-                    android:id="@+id/textView_dosagem"
+                    android:id="@+id/textView_dosagem_cadastro"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -84,20 +84,20 @@
 
                 <EditText
                     android:inputType="numberDecimal"
-                    android:id="@+id/form_quantidadeDosagem"
+                    android:id="@+id/form_quantidadeDosagem_cadastro"
                     android:backgroundTint="@color/colorPrimary"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/textView_dosagem"
+                    android:layout_below="@id/textView_dosagem_cadastro"
                     android:hint="Digite a quantidade"
                     android:paddingRight="8dp" />
 
                 <Spinner
-                    android:id="@+id/spinnerDosagem"
+                    android:id="@+id/spinnerDosagem_cadastro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@id/form_quantidadeDosagem"
-                    android:layout_toRightOf="@id/form_quantidadeDosagem">
+                    android:layout_alignBaseline="@id/form_quantidadeDosagem_cadastro"
+                    android:layout_toRightOf="@id/form_quantidadeDosagem_cadastro">
 
                 </Spinner>
 
@@ -124,7 +124,7 @@
                 tools:layout_constraintTop_creator="1">
 
                 <TextView
-                    android:id="@+id/textView_nomeMedicamento"
+                    android:id="@+id/textView_nomeMedicamento_cadastro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -136,12 +136,12 @@
                     android:textColor="@color/colorPrimary" />
 
                 <EditText
-                    android:id="@+id/form_nomeMedicamento"
+                    android:id="@+id/form_nomeMedicamento_cadastro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
-                    android:layout_below="@+id/textView_nomeMedicamento"
+                    android:layout_below="@+id/textView_nomeMedicamento_cadastro"
                     android:backgroundTint="@color/colorPrimary"
                     android:hint="Digite o nome do medicamento" />
 
@@ -150,7 +150,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:layout_below="@id/form_nomeMedicamento"
+                    android:layout_below="@id/form_nomeMedicamento_cadastro"
                     android:text="Adicionar Consulta"
                     android:textAllCaps="false"
                     android:textColor="@color/colorPrimary" />
@@ -177,7 +177,7 @@
                 tools:layout_constraintRight_creator="1">
 
                 <TextView
-                    android:id="@+id/textView_horarioLembrete"
+                    android:id="@+id/textView_horarioLembrete_cadastro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingBottom="8dp"
@@ -186,7 +186,7 @@
                     android:textColor="@color/colorPrimary" />
 
                 <Switch
-                    android:id="@+id/switch_acionarAlarme"
+                    android:id="@+id/switch_acionarAlarme_cadastro"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -198,21 +198,21 @@
                     android:id="@+id/textClock1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/textView_horarioLembrete"
+                    android:layout_below="@id/textView_horarioLembrete_cadastro"
                     android:paddingBottom="8dp"
                     android:paddingTop="8dp"
                     android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                     android:textColor="@color/colorPrimary" />
 
                 <Button
-                    android:id="@+id/botaoAdicionaHorario"
+                    android:id="@+id/botaoAdicionaHorario_cadastro"
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Adicionar horario"
                     android:textColor="@color/colorPrimary"
                     android:textAllCaps="false"
-                    android:layout_below="@+id/textView_horarioLembrete"
+                    android:layout_below="@+id/textView_horarioLembrete_cadastro"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"/>
 
