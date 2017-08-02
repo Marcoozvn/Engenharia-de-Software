@@ -9,10 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".listaMedicamentosActivity" android:theme="@style/AppTheme.NoActionBar">
+        <activity
+            android:name=".listaMedicamentosActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
@@ -27,6 +28,14 @@
         <activity android:theme="@style/Theme.AppCompat.Light.Dialog.MinWidth" android:name=".AlarmeActivity"></activity>
         <activity android:name=".EdicaoMedicamentosActivity" android:theme="@style/AppTheme.NoActionBar"/>
         </receiver>
+        <activity
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:theme="@style/Theme.AppCompat.Light.Dialog.MinWidth" />
+
+
+        <activity android:name=".relatorioDiarioActivity" />
+        <activity android:name=".RelatorioSemanalActivity"></activity>
     </application>
 
 </manifest>
