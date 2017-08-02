@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="15dp"
+    android:paddingTop="20dp"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:inputType="text"
+        android:maxLength="15"
+        android:textSize="25dp"
+        android:textColor="@color/colorPrimary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/main_line_title"
+        tools:text="Consulta 1"
+        android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+        android:textAllCaps="true"/>
+
+    <ImageButton
+        android:id="@+id/info_consulta"
+        android:layout_width="25dp"
+        android:layout_height="27dp"
+        android:background="@drawable/icone_info"
+        android:layout_marginRight="70dp"
+        android:layout_marginEnd="70dp"
+        android:layout_alignBottom="@+id/main_line_title"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <ImageButton
+        android:id="@+id/excluirConsulta"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:background="@drawable/trash_bin"
+        android:layout_alignTop="@+id/info_consulta"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="14dp"
+        android:layout_marginEnd="14dp" />
+
+
+</RelativeLayout>

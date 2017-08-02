@@ -1,5 +1,10 @@
 package models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
 /**
  * Created by Lucas Wilker on 28/07/2017.
  */
@@ -67,5 +72,10 @@ public class Consulta {
 
     public void setTelefone(String telefone) {
         this.telefone = telefone;
+    }
+
+    @Override
+    public String toString() {
+        return tipoConsulta;
     }
 }

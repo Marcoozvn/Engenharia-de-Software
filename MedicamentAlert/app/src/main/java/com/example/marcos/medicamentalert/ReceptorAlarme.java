@@ -4,8 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import Activities.AlarmeActivity;
-
 
 /**
  * Created by Marcos on 17/07/2017.
