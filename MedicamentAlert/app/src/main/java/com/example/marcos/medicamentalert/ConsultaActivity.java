@@ -58,8 +58,6 @@ public class ConsultaActivity extends AppCompatActivity {
 
         //atribuindo as strings
 
-        Log.i("BTN", btn_horario.getText().toString());
-
         if (editText_tipo.getText().toString().isEmpty()){
             editText_tipo.setError("Por favor, digite o tipo da consulta!");
         }

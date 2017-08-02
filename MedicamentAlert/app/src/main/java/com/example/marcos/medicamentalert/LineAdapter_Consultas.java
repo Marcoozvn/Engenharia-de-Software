@@ -49,7 +49,6 @@ public class LineAdapter_Consultas extends RecyclerView.Adapter<LineHolder_Consu
         notifyItemRangeChanged(position, mConsulta.size());
     }
 
-
     @Override
     public int getItemCount() {
         return mConsulta != null ? mConsulta.size() : 0;
