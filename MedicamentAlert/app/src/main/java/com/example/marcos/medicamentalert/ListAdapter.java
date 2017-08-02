@@ -33,12 +33,14 @@ public class ListAdapter extends RecyclerView.Adapter<ListHolder>{
 
     @Override
     public void onBindViewHolder(ListHolder holder, int position) {
+        /*
         String aux = "";
         aux += medicamentoList.get(position).getNome() + " ";
         for (String horario: medicamentoList.get(position).getAlarmes().keySet()) {
             aux += horario + "->" + medicamentoList.get(position).getAlarmes().get(horario) + " ";
         }
-        holder.nomeMedicamento.setText(aux);
+        */
+        holder.nomeMedicamento.setText(medicamentoList.get(position).getNome());
         holder.infoMedicamento.setOnClickListener(view -> editaItem(position));
         holder.deletaMedicamento.setOnClickListener(view -> removerItem(position));
     }
