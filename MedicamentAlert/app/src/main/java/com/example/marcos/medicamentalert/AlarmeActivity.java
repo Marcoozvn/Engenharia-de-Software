@@ -1,4 +1,4 @@
-package Activities;
+package com.example.marcos.medicamentalert;
 
 /**
  * Created by Marcos on 17/07/2017.

@@ -1,4 +1,4 @@
-package Activities;
+package com.example.marcos.medicamentalert;
 
 
 import android.app.AlarmManager;
@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -15,12 +16,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextClock;
 
-import com.example.marcos.medicamentalert.R;
-import com.example.marcos.medicamentalert.ReceptorAlarme;
-import com.example.marcos.medicamentalert.TimePickerFragment;
-
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.logging.Logger;
 
 import models.Medicamento;
 
@@ -31,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         Spinner spinnerFrequencia = (Spinner) findViewById(R.id.spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -55,17 +52,23 @@ public class MainActivity extends AppCompatActivity {
         salvar.setOnClickListener(salvarOnClickListener);
 
         TextClock textClock = (TextClock) findViewById(R.id.textClock);
-        textClock.setOnClickListener(escolheHorarioOnClickListener);
+//        textClock.setOnClickListener(escolheHorarioOnClickListener);
 
     }
 
-    private View.OnClickListener escolheHorarioOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            TimePickerFragment dialogFragment = new TimePickerFragment();
-            dialogFragment.show(getFragmentManager(), "TimePicker");
-        }
-    };
+//    private View.OnClickListener escolheHorarioOnClickListener = new View.OnClickListener() {
+//        @Override
+//        public void onClick(View v) {
+//            TimePickerFragment dialogFragment = new TimePickerFragment();
+//            dialogFragment.show(getFragmentManager(), "TimePicker");
+//        }
+//    };
+
+    public void intentConsulta(View view){
+        Intent intent_consulta = new Intent(this, ConsultaActivity.class);
+        startActivity(intent_consulta);
+    }
+
 
     private View.OnClickListener salvarOnClickListener = new View.OnClickListener() {
         @Override
