@@ -18,22 +18,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AlarmeActivity" />
 
         <receiver android:name=".ReceptorAlarme" />
-
         <activity android:name=".ConsultaActivity" />
         <activity android:name=".ListagemConsultas"></activity>
         <activity android:name=".CadastroMedicamentosActivity" android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:theme="@style/Theme.AppCompat.Light.Dialog.MinWidth" android:name=".AlarmeActivity"></activity>
         <activity android:name=".EdicaoMedicamentosActivity" android:theme="@style/AppTheme.NoActionBar"/>
-        </receiver>
-        <activity
-            android:theme="@style/AppTheme.NoActionBar" />
-        <activity
-            android:theme="@style/Theme.AppCompat.Light.Dialog.MinWidth" />
-
-
         <activity android:name=".relatorioDiarioActivity" />
         <activity android:name=".RelatorioSemanalActivity"></activity>
     </application>

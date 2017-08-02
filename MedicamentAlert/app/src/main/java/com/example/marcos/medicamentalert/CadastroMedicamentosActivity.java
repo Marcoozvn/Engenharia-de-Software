@@ -23,6 +23,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import models.Medicamento;
+
 public class CadastroMedicamentosActivity extends AppCompatActivity {
     private int ultimoTextClock = R.id.textClock1;
     private int numTextClocks = 1;
@@ -64,6 +66,14 @@ public class CadastroMedicamentosActivity extends AppCompatActivity {
         TextView textClock = (TextView) findViewById(R.id.textClock1);
         textClock.setOnClickListener(escolheHorarioOnClickListener);
 
+//        Button btn_add_consulta = (Button) findViewById(R.id.add_consulta);
+
+    }
+
+    public void intent_consulta(View view){
+        Intent intent_consulta = new Intent(this, ConsultaActivity.class);
+        intent_consulta.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent_consulta);
     }
 
     private View.OnClickListener listagemOnClickListener = new View.OnClickListener() {

@@ -24,6 +24,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import models.Medicamento;
+
 /**
  * Created by Marcos on 01/08/2017.
  */

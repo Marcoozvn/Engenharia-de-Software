@@ -106,7 +106,7 @@ public class ConsultaActivity extends AppCompatActivity {
     }
 
     public void intentListagem(View v){
-        Intent intent_listagem = new Intent(this, MainActivity.class);
+        Intent intent_listagem = new Intent(this, ListagemConsultas.class);
         startActivity(intent_listagem);
     }
 

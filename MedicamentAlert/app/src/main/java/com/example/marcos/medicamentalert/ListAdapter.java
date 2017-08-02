@@ -11,6 +11,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+import models.Medicamento;
+
 /**
  * Created by Marcos on 31/07/2017.
  */

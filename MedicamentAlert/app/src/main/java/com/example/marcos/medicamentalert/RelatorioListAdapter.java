@@ -6,6 +6,8 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import models.Medicamento;
+
 /**
  * Created by Marcos on 31/07/2017.
  */
