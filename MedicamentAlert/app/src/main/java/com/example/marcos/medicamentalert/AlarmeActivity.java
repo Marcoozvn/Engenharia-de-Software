@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.marcos.medicamentalert.R;
 
@@ -29,11 +30,18 @@ public class AlarmeActivity extends Activity {
 
         NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         nm.cancel(1);
+        String medicamento = getIntent().getStringExtra("nomeMedicamento");
+        ((TextView)findViewById(R.id.nomeMedicamentoCaixaAlarme)).setText(medicamento);
+        String dosagem = "" + getIntent().getFloatExtra("dosagem", 0) + getIntent().getStringExtra("metricaDosagem");
+        ((TextView)findViewById(R.id.dosagemCaixaAlarme)).setText(dosagem);
     }
 
     private View.OnClickListener tomarOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            String horario = getIntent().getStringExtra("horario");
+            int id = getIntent().getIntExtra("id", 0);
+            listaMedicamentosActivity.medicamentoTomado(horario, id);
             Intent i = new Intent(AlarmeActivity.this, ReceptorAlarme.class);
             PendingIntent pi = PendingIntent.getBroadcast(getApplicationContext(), 0, i, 0);
             AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);

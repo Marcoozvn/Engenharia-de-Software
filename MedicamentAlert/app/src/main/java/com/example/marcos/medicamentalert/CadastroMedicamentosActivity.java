@@ -159,7 +159,7 @@ public class CadastroMedicamentosActivity extends AppCompatActivity {
                 String dosagem = viewDosagem.getText().toString();
                 String dosagemMetrica = spinnerDosagem.getSelectedItem().toString();
 
-                Medicamento medicamento = new Medicamento(nomeMedicamento, Integer.valueOf(dosagem), dosagemMetrica);
+                Medicamento medicamento = new Medicamento(nomeMedicamento, Float.valueOf(dosagem), dosagemMetrica);
                 Map<String, Boolean> alarmes = new HashMap<>();
                 for (int i = 1; i <= numTextClocks; i++){
                     System.out.print(numTextClocks + " - " + i);
@@ -175,7 +175,7 @@ public class CadastroMedicamentosActivity extends AppCompatActivity {
                 if (switchAlarme.isChecked()){
                     for (int i = 1; i <= numTextClocks; i++){
                         TextView textclock = (TextView) findViewById(retornaId(i));
-                        configuraAlarme(textclock);
+                        configuraAlarme(textclock, medicamento.hashCode(), nomeMedicamento, Float.valueOf(dosagem), dosagemMetrica, i);
                     }
                 }
                 finish();
@@ -204,9 +204,14 @@ public class CadastroMedicamentosActivity extends AppCompatActivity {
         return 0;
     }
 
-    private void configuraAlarme(TextView textClock) {
+    private void configuraAlarme(TextView textClock, int id, String nome, float dosagem, String metricaDosagem, int count) {
         Intent i = new Intent(this, ReceptorAlarme.class);
-        PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, 0);
+        i.putExtra("horario", textClock.getText().toString());
+        i.putExtra("id", id);
+        i.putExtra("nomeMedicamento", nome);
+        i.putExtra("dosagem", dosagem);
+        i.putExtra("metricaDosagem", metricaDosagem);
+        PendingIntent pi = PendingIntent.getBroadcast(this, count, i, 0);
         AlarmManager gerenciador = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Calendar cal = Calendar.getInstance();
 

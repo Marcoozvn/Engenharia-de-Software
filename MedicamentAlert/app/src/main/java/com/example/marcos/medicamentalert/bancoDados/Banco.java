@@ -159,4 +159,16 @@ public class Banco extends SQLiteOpenHelper{
         db.delete(TABELA_MEDICAMENTOS, null, null);
         db.close();
     }
+
+    public void atualizaTabelaHorario(String horario, int id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUNA_STATUS, "true");
+        int i = db.update(TABELA_HORARIOS, values, COLUNA_CODIGO + "=" + id + " AND " + COLUNA_HORARIO + "= '" + horario + "'", null);
+        System.out.print(i);
+        /*
+        db.rawQuery("UPDATE " + TABELA_HORARIOS + " SET " + COLUNA_STATUS + " = true WHERE " + COLUNA_CODIGO +
+        " = " + id + " AND " + COLUNA_HORARIO + " = " + horario, null);
+        */
+    }
 }

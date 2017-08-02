@@ -17,6 +17,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,8 +39,10 @@ import java.util.List;
 public class listaMedicamentosActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     public static Banco bd;
     public static ListAdapter adapter;
-    NavigationView navigationView = null;
-    Toolbar toolbar = null;
+    private static RecyclerView mRecyclerView;
+    private NavigationView navigationView = null;
+    private Toolbar toolbar = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,13 +84,14 @@ public class listaMedicamentosActivity extends AppCompatActivity implements Navi
 
         //fim navegation viewr
         bd = new Banco(this);
+        /*
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Medicamentos");
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_menu_white_24dp));
+        */
 
-
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_layour_recycler);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_layour_recycler);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
 
@@ -178,6 +182,10 @@ public class listaMedicamentosActivity extends AppCompatActivity implements Navi
         //ListCursorAdapter adapter = new ListCursorAdapter(this, cursor);
         //listaDeMedicamentos.setAdapter(adapter);
 
-
-
+    public static void medicamentoTomado(String horario, int id){
+        bd.atualizaTabelaHorario(horario, id);
+        adapter = new ListAdapter(bd.getMedicamentosNoBanco());
+        mRecyclerView.setAdapter(adapter);
+        Log.i("Alarme", "medicamento tomado");
+    }
 }

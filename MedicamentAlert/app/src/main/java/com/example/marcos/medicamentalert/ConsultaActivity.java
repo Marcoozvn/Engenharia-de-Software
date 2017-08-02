@@ -5,6 +5,7 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -43,9 +44,22 @@ public class ConsultaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consulta);
-        getInstance();
 
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.mytoolbarConsulta);
+        setSupportActionBar(myToolbar);
+        getSupportActionBar().setTitle("Cadastro de Consultas");
+        myToolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_clear_white_24dp));
+        myToolbar.setNavigationOnClickListener(listagemOnClickListener);
+
+        getInstance();
     }
+
+    private View.OnClickListener listagemOnClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            finish();
+        }
+    };
 
     public void salvarConsulta(View view) {
 
