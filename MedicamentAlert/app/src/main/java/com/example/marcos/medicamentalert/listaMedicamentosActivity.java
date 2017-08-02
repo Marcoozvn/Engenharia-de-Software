@@ -67,8 +67,7 @@ public class listaMedicamentosActivity extends AppCompatActivity {
             getApplicationContext().startActivity(intent);
         }
     };
-
-        //SQLiteDatabase db = MainActivity.bd.getWritableDatabase();
+           //SQLiteDatabase db = MainActivity.bd.getWritableDatabase();
         //Cursor cursor = db.rawQuery("SELECT * from tabela_medicamentos", null);
         //ListCursorAdapter adapter = new ListCursorAdapter(this, cursor);
         //listaDeMedicamentos.setAdapter(adapter);

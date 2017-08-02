@@ -9,10 +9,11 @@ import android.os.Bundle;
 import android.app.Fragment;
 import android.text.format.DateFormat;
 import android.view.View;
-import android.widget.TextClock;
 import android.app.DialogFragment;
 import android.app.Dialog;
 import java.util.Calendar;
+
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 
@@ -22,7 +23,7 @@ import android.widget.TimePicker;
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener{
 
     private Bundle bundle = getArguments();
-    private TextClock textClock;
+    private TextView textClock;
 
     public TimePickerFragment(){
         super();
@@ -30,7 +31,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 
     public TimePickerFragment(View textClock){
         super();
-        this.textClock = (TextClock) textClock;
+        this.textClock = (TextView) textClock;
 
     }
 

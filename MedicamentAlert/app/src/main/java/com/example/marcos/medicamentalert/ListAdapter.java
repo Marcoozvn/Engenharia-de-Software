@@ -7,7 +7,9 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Marcos on 31/07/2017.
@@ -41,13 +43,33 @@ public class ListAdapter extends RecyclerView.Adapter<ListHolder>{
         intent.putExtra("Dosagem", medicamento.getDosagem());
         intent.putExtra("metricaDosagem", medicamento.getMetricaDosagem());
         intent.putExtra("Codigo", medicamento.getCodigo());
+        intent.putStringArrayListExtra("Alarmes", populaString(medicamento.getAlarmes().keySet()));
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
     }
 
-    public void adicionaMedicamento(Medicamento medicamento){
-        medicamentoList.add(medicamento);
-        notifyItemInserted(getItemCount());
+    private ArrayList<String> populaString(Set<String> keySet ){
+        ArrayList<String> arrayList= new ArrayList<>();
+        for (String key : keySet) {
+            arrayList.add(key);
+        }
+        return arrayList;
+    }
+
+    public void guardaMedicamento(Medicamento medicamento){
+        if (medicamento.getCodigo() != 0){
+            for (int i = 0; i < medicamentoList.size(); i++) {
+                if (medicamentoList.get(i).getCodigo() == medicamento.getCodigo()){
+                    medicamentoList.remove(medicamentoList.get(i));
+                    medicamentoList.add(medicamento);
+                    notifyItemChanged(i);
+                }
+            }
+        } else {
+            medicamento.setCodigo(medicamento.hashCode());
+            medicamentoList.add(medicamento);
+            notifyItemInserted(getItemCount());
+        }
     }
 
     private void removerItem(int position) {

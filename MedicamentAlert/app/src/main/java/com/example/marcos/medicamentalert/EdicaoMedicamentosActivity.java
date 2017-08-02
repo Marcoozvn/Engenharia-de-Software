@@ -13,12 +13,13 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextClock;
+import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,17 +29,17 @@ import java.util.Map;
  */
 
 public class EdicaoMedicamentosActivity extends AppCompatActivity {
-    private int ultimoTextClock = R.id.textClock1;
-    private int numTextClocks = 1;
+    private int ultimoTextClock = R.id.textView_horarioLembrete_edicao;
+    private int numTextClocks = 0;
     private Medicamento medicamento;
 
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.editar_medicamento);
+        setContentView(R.layout.edicao_medicamentos);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.mytoolbar);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.mytoolbarEdicao);
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("Edição de Medicamentos");
         myToolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_clear_white_24dp));
@@ -51,7 +52,9 @@ public class EdicaoMedicamentosActivity extends AppCompatActivity {
         int codigo = intent.getIntExtra("Codigo", 0);
         medicamento = new Medicamento(nome, dosagem, metricaDosagem);
         medicamento.setCodigo(codigo);
-        Spinner spinnerDosagem = (Spinner) findViewById(R.id.spinnerDosagem);
+        medicamento.setAlarmes(populaMapa(intent.getStringArrayListExtra("Alarmes")));
+
+        Spinner spinnerDosagem = (Spinner) findViewById(R.id.spinnerDosagem_edicao);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapterSpinnerDosagem = ArrayAdapter.createFromResource(this,
                 R.array.dosagem_array, android.R.layout.simple_spinner_item);
@@ -60,16 +63,22 @@ public class EdicaoMedicamentosActivity extends AppCompatActivity {
         // Apply the adapter to the spinner
         spinnerDosagem.setAdapter(adapterSpinnerDosagem);
 
-        Button salvar = (Button) findViewById(R.id.salvar);
+        Button salvar = (Button) findViewById(R.id.salvarEdicao);
         salvar.setOnClickListener(salvarOnClickListener);
 
-        Button adicionaHorario = (Button) findViewById(R.id.botaoAdicionaHorario);
+        Button adicionaHorario = (Button) findViewById(R.id.botaoAdicionaHorario_edicao);
         adicionaHorario.setOnClickListener(adicionaHorarioOnClickListener);
-        TextClock textClock = (TextClock) findViewById(R.id.textClock1);
-        textClock.setOnClickListener(escolheHorarioOnClickListener);
         preencheDosagemMedicamento();
         preencheHorarioMedicamento();
         preencheNomeMedicamento();
+    }
+
+    private Map<String, Boolean> populaMapa(ArrayList<String> alarmes){
+        Map<String, Boolean> mapa = new HashMap<>();
+        for (String alarme : alarmes) {
+            mapa.put(alarme, false);
+        }
+        return mapa;
     }
 
     private View.OnClickListener listagemOnClickListener = new View.OnClickListener() {
@@ -82,23 +91,57 @@ public class EdicaoMedicamentosActivity extends AppCompatActivity {
     };
 
     private void preencheNomeMedicamento(){
-        EditText nomeMedicamento = (EditText) findViewById(R.id.form_nomeMedicamento);
+        EditText nomeMedicamento = (EditText) findViewById(R.id.form_nomeMedicamento_edicao);
         nomeMedicamento.setText(medicamento.getNome());
     }
 
     private void preencheHorarioMedicamento(){
         for (String horario : medicamento.getAlarmes().keySet()) {
-            TextClock textClock = adicionaHorario();
-            if (textClock != null){
-                textClock.setText(horario);
+            RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.relativeLayoutHorarioLembrete);
+            TextView textClockaux = new TextView(this);
+            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+            layoutParams.addRule(RelativeLayout.BELOW, ultimoTextClock);
+            textClockaux.setLayoutParams(layoutParams);
+            switch (numTextClocks){
+                case 0:
+                    textClockaux.setId(R.id.textClockEdicao1);
+                    break;
+                case 1:
+                    textClockaux.setId(R.id.textClockEdicao2);
+                    break;
+                case 2:
+                    textClockaux.setId(R.id.textClockEdicao3);
+                    break;
+                case 3:
+                    textClockaux.setId(R.id.textClockEdicao4);
+                    break;
+                case 4:
+                    textClockaux.setId(R.id.textClockEdicao5);
+                    break;
+                case 5:
+                    textClockaux.setId(R.id.textClockEdicao6);
+                    break;
+                case 6:
+                    textClockaux.setId(R.id.textClockEdicao7);
+                    break;
             }
+
+            textClockaux.setTextAppearance(this, android.R.style.TextAppearance_Large);
+            textClockaux.setTextColor(getResources().getColor(R.color.colorPrimary));
+            textClockaux.setPadding(0, 0, 0, 8);
+            //textClockaux.set
+            textClockaux.setText(horario);
+            relativeLayout.addView(textClockaux);
+            textClockaux.setOnClickListener(escolheHorarioOnClickListener);
+            ultimoTextClock = textClockaux.getId();
+            numTextClocks++;
         }
     }
 
     private void preencheDosagemMedicamento(){
-        EditText dosagemMedicamento = (EditText) findViewById(R.id.form_quantidadeDosagem);
+        EditText dosagemMedicamento = (EditText) findViewById(R.id.form_quantidadeDosagem_edicao);
         dosagemMedicamento.setText(String.valueOf(medicamento.getDosagem()));
-        Spinner metricaDosagem = (Spinner) findViewById(R.id.spinnerDosagem);
+        Spinner metricaDosagem = (Spinner) findViewById(R.id.spinnerDosagem_edicao);
         if (medicamento.getMetricaDosagem().equals("ml")){
             metricaDosagem.setSelection(getResources().getIntArray(R.array.dosagem_array)[0]);
         }
@@ -109,146 +152,142 @@ public class EdicaoMedicamentosActivity extends AppCompatActivity {
     }
 
     public void editaNomeMedicamento(View view){
-        FrameLayout layout = (FrameLayout) view;
-        layout.setVisibility(View.GONE);
-        EditText editText = (EditText) view.findViewById(R.id.form_nomeMedicamento);
+        view.setForeground(getDrawable(R.color.transparent));
+        EditText editText = (EditText) findViewById(R.id.form_nomeMedicamento_edicao);
+        Button button = (Button) findViewById(R.id.adicionarConsulta_edicao);
+        button.setEnabled(true);
         editText.setEnabled(true);
     }
 
     public void editaHorarioMedicamento(View view){
-        FrameLayout layout = (FrameLayout) view;
-        layout.setVisibility(View.GONE);
+        view.setForeground(getDrawable(R.color.transparent));
+        Switch aSwitch = (Switch) findViewById(R.id.switch_acionarAlarme_edicao);
+        Button button = (Button) findViewById(R.id.botaoAdicionaHorario_edicao);
+        button.setEnabled(true);
+        aSwitch.setEnabled(true);
+
     }
 
     public void editaDosagemMedicamento(View view){
-        FrameLayout layout = (FrameLayout) view;
-        layout.setVisibility(View.GONE);
-        EditText editText = (EditText) view.findViewById(R.id.form_quantidadeDosagem);
+        view.setForeground(getDrawable(R.color.transparent));
+        EditText editText = (EditText) findViewById(R.id.form_quantidadeDosagem_edicao);
         editText.setEnabled(true);
     }
-    private TextClock adicionaHorario(){
-        if (numTextClocks < 7){
-            RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout3);
-            TextClock textClockaux = new TextClock(getApplicationContext());
+    private void adicionaHorario(){
+        if (numTextClocks < 7) {
+            RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.relativeLayoutHorarioLembrete);
+            TextClock textClockaux = new TextClock(this);
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
             layoutParams.addRule(RelativeLayout.BELOW, ultimoTextClock);
             textClockaux.setLayoutParams(layoutParams);
-            switch (numTextClocks){
+            switch (numTextClocks) {
+                case 0:
+                    textClockaux.setId(R.id.textClockEdicao1);
+                    break;
                 case 1:
-                    textClockaux.setId(R.id.textClock2);
+                    textClockaux.setId(R.id.textClockEdicao2);
                     break;
                 case 2:
-                    textClockaux.setId(R.id.textClock3);
+                    textClockaux.setId(R.id.textClockEdicao3);
                     break;
                 case 3:
-                    textClockaux.setId(R.id.textClock4);
+                    textClockaux.setId(R.id.textClockEdicao4);
                     break;
                 case 4:
-                    textClockaux.setId(R.id.textClock5);
+                    textClockaux.setId(R.id.textClockEdicao5);
                     break;
                 case 5:
-                    textClockaux.setId(R.id.textClock6);
+                    textClockaux.setId(R.id.textClockEdicao6);
                     break;
                 case 6:
-                    textClockaux.setId(R.id.textClock7);
+                    textClockaux.setId(R.id.textClockEdicao7);
                     break;
             }
 
-            textClockaux.setTextAppearance(getApplicationContext(), android.R.style.TextAppearance_Large);
+            textClockaux.setTextAppearance(this, android.R.style.TextAppearance_Large);
             textClockaux.setTextColor(getResources().getColor(R.color.colorPrimary));
             textClockaux.setPadding(0, 0, 0, 8);
             relativeLayout.addView(textClockaux);
             textClockaux.setOnClickListener(escolheHorarioOnClickListener);
             ultimoTextClock = textClockaux.getId();
             numTextClocks++;
-            return textClockaux;
         }
-        return null;
     }
-    private View.OnClickListener adicionaHorarioOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            adicionaHorario();
-        }
+    private View.OnClickListener adicionaHorarioOnClickListener = v -> adicionaHorario();
+
+    private View.OnClickListener escolheHorarioOnClickListener = v -> {
+        TimePickerFragment dialogFragment = new TimePickerFragment(v);
+        dialogFragment.show(getFragmentManager(), "TimePicker");
     };
 
-    private View.OnClickListener escolheHorarioOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            TimePickerFragment dialogFragment = new TimePickerFragment(v);
-            dialogFragment.show(getFragmentManager(), "TimePicker");
+    private View.OnClickListener salvarOnClickListener = v -> {
+        Boolean camposPreenchidos = true;
+        EditText viewNomeMedicamento = (EditText) findViewById(R.id.form_nomeMedicamento_edicao);
+        if( viewNomeMedicamento.getText().toString().length() == 0 ) {
+            camposPreenchidos = false;
+            viewNomeMedicamento.setError("Por favor, digite o nome do medicamento!");
         }
-    };
+        //EditText viewNomeMedico = (EditText) findViewById(R.id.form_nomeMedico);
+        EditText viewDosagem = (EditText) findViewById(R.id.form_quantidadeDosagem_edicao);
+        if( viewDosagem.getText().toString().length() == 0 ) {
+            camposPreenchidos = false;
+            viewDosagem.setError("Por favor, digite a dosagem!");
+        }
 
-    private View.OnClickListener salvarOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            Boolean camposPreenchidos = true;
-            EditText viewNomeMedicamento = (EditText) findViewById(R.id.form_nomeMedicamento);
-            if( viewNomeMedicamento.getText().toString().length() == 0 ) {
-                camposPreenchidos = false;
-                viewNomeMedicamento.setError("Por favor, digite o nome do medicamento!");
+        if (camposPreenchidos) {
+            Spinner spinnerDosagem = (Spinner) findViewById(R.id.spinnerDosagem_edicao);
+            String nomeMedicamento = viewNomeMedicamento.getText().toString();
+            String dosagem = viewDosagem.getText().toString();
+            String dosagemMetrica = spinnerDosagem.getSelectedItem().toString();
+
+            medicamento.setNome(nomeMedicamento);
+            medicamento.setDosagem(Float.valueOf(dosagem));
+            medicamento.setMetricaDosagem(dosagemMetrica);
+            Map<String, Boolean> alarmes = new HashMap<>();
+            for (int i = 1; i <= numTextClocks; i++){
+                TextView textclock = (TextView) findViewById(retornaId(i));
+                alarmes.put(textclock.getText().toString(), false);
             }
-            //EditText viewNomeMedico = (EditText) findViewById(R.id.form_nomeMedico);
-            EditText viewDosagem = (EditText) findViewById(R.id.form_quantidadeDosagem);
-            if( viewDosagem.getText().toString().length() == 0 ) {
-                camposPreenchidos = false;
-                viewDosagem.setError("Por favor, digite a dosagem!");
-            }
+            medicamento.setAlarmes(alarmes);
 
-            if (camposPreenchidos) {
-                Spinner spinnerDosagem = (Spinner) findViewById(R.id.spinnerDosagem);
-                String nomeMedicamento = viewNomeMedicamento.getText().toString();
-                //String nomeMedico = viewNomeMedico.getText().toString();
-                String dosagem = viewDosagem.getText().toString();
-                String dosagemMetrica = spinnerDosagem.getSelectedItem().toString();
+            listaMedicamentosActivity.bd.atualizaMedicamento(medicamento);
+            listaMedicamentosActivity.adapter.guardaMedicamento(medicamento);
 
-                Medicamento medicamento = new Medicamento(nomeMedicamento, Integer.valueOf(dosagem), dosagemMetrica);
-                Map<String, Boolean> alarmes = new HashMap<>();
+            Switch switchAlarme = (Switch) findViewById(R.id.switch_acionarAlarme_edicao);
+            if (switchAlarme.isChecked()){
                 for (int i = 1; i <= numTextClocks; i++){
-                    System.out.print(numTextClocks + " - " + i);
-                    TextClock textclock = (TextClock) findViewById(retornaId(i));
-                    alarmes.put(textclock.getText().toString(), false);
+                    TextView textclock = (TextView) findViewById(retornaId(i));
+                    configuraAlarme(textclock);
                 }
-                medicamento.setAlarmes(alarmes);
-
-                listaMedicamentosActivity.bd.addMedicamento(medicamento);
-                listaMedicamentosActivity.adapter.adicionaMedicamento(medicamento);
-
-                Switch switchAlarme = (Switch) findViewById(R.id.switch_acionarAlarme);
-                if (switchAlarme.isChecked()){
-                    for (int i = 1; i <= numTextClocks; i++){
-                        TextClock textclock = (TextClock) findViewById(retornaId(i));
-                        configuraAlarme(textclock);
-                    }
-                }
-                finish();
-
             }
+
+            Intent intent = new Intent(this, listaMedicamentosActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         }
     };
 
     private int retornaId(int i){
         switch (i){
             case 1:
-                return R.id.textClock1;
+                return R.id.textClockEdicao1;
             case 2:
-                return R.id.textClock2;
+                return R.id.textClockEdicao2;
             case 3:
-                return R.id.textClock3;
+                return R.id.textClockEdicao3;
             case 4:
-                return R.id.textClock4;
+                return R.id.textClockEdicao4;
             case 5:
-                return R.id.textClock5;
+                return R.id.textClockEdicao5;
             case 6:
-                return R.id.textClock6;
+                return R.id.textClockEdicao6;
             case 7:
-                return R.id.textClock7;
+                return R.id.textClockEdicao7;
         }
         return 0;
     }
 
-    private void configuraAlarme(TextClock textClock) {
+    private void configuraAlarme(TextView textClock) {
         Intent i = new Intent(this, ReceptorAlarme.class);
         PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, 0);
         AlarmManager gerenciador = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
