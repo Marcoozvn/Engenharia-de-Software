@@ -1,12 +1,15 @@
-package com.example.marcos.medicamentalert;
+package com.example.marcos.medicamentalert.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.example.marcos.medicamentalert.activities.listaMedicamentosActivity;
+import com.example.marcos.medicamentalert.R;
+
 import java.util.List;
 
-import models.Medicamento;
+import com.example.marcos.medicamentalert.models.Medicamento;
 
 /**
  * Created by Marcos on 31/07/2017.

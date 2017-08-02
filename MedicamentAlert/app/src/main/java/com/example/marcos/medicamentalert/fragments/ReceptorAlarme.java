@@ -1,4 +1,4 @@
-package com.example.marcos.medicamentalert;
+package com.example.marcos.medicamentalert.fragments;
 
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -11,6 +11,8 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v7.app.NotificationCompat;
 import android.util.Log;
+
+import com.example.marcos.medicamentalert.activities.AlarmeActivity;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
 

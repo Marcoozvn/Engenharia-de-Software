@@ -1,4 +1,4 @@
-package com.example.marcos.medicamentalert;
+package com.example.marcos.medicamentalert.activities;
 
 
 import android.app.AlarmManager;
@@ -19,11 +19,15 @@ import android.widget.Switch;
 import android.widget.TextClock;
 import android.widget.TextView;
 
+import com.example.marcos.medicamentalert.R;
+import com.example.marcos.medicamentalert.fragments.ReceptorAlarme;
+import com.example.marcos.medicamentalert.fragments.TimePickerFragment;
+
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-import models.Medicamento;
+import com.example.marcos.medicamentalert.models.Medicamento;
 
 public class CadastroMedicamentosActivity extends AppCompatActivity {
     private int ultimoTextClock = R.id.textClock1;

@@ -1,4 +1,4 @@
-package com.example.marcos.medicamentalert;
+package com.example.marcos.medicamentalert.activities;
 
 /**
  * Created by Marcos on 17/07/2017.
@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.marcos.medicamentalert.R;
+import com.example.marcos.medicamentalert.fragments.ReceptorAlarme;
 
 public class AlarmeActivity extends Activity {
 

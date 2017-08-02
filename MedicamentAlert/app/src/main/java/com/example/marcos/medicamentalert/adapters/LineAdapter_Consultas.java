@@ -1,18 +1,15 @@
-package com.example.marcos.medicamentalert;
+package com.example.marcos.medicamentalert.adapters;
 
-import android.content.Context;
-import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
-import android.text.InputType;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
+
+import com.example.marcos.medicamentalert.fragments.DialogText;
+import com.example.marcos.medicamentalert.R;
 
 import java.util.List;
 
-import models.Consulta;
+import com.example.marcos.medicamentalert.models.Consulta;
 
 public class LineAdapter_Consultas extends RecyclerView.Adapter<LineHolder_Consultas> {
 

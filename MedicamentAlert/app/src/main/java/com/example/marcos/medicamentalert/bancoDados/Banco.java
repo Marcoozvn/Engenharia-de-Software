@@ -7,11 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import models.Medicamento;
+import com.example.marcos.medicamentalert.models.Medicamento;
 
 /**
  * Created by Marcos on 27/07/2017.

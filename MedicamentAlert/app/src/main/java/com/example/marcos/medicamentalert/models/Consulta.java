@@ -1,9 +1,4 @@
-package models;
-
-import android.os.Parcel;
-import android.os.Parcelable;
-
-import java.io.Serializable;
+package com.example.marcos.medicamentalert.models;
 
 /**
  * Created by Lucas Wilker on 28/07/2017.

@@ -1,4 +1,4 @@
-package models;
+package com.example.marcos.medicamentalert.models;
 
 import java.util.HashMap;
 import java.util.Map;

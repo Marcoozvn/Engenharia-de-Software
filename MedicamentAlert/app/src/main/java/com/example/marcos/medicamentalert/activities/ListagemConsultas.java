@@ -1,15 +1,17 @@
-package com.example.marcos.medicamentalert;
+package com.example.marcos.medicamentalert.activities;
 
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.example.marcos.medicamentalert.adapters.LineAdapter_Consultas;
+import com.example.marcos.medicamentalert.R;
+
 import java.util.List;
 
-import models.Consulta;
+import com.example.marcos.medicamentalert.models.Consulta;
 
 public class ListagemConsultas extends AppCompatActivity {
 
