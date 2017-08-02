@@ -9,18 +9,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".listaMedicamentosActivity" android:theme="@style/AppTheme.NoActionBar">
+        <activity
+            android:name=".listaMedicamentosActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CadastroMedicamentosActivity" android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:theme="@style/Theme.AppCompat.Light.Dialog.MinWidth" android:name=".AlarmeActivity"></activity>
-        <receiver android:name=".ReceptorAlarme">
-        </receiver>
+        <activity
+            android:name=".CadastroMedicamentosActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AlarmeActivity"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.MinWidth" />
+
+        <receiver android:name=".ReceptorAlarme" />
+
+        <activity android:name=".relatorioDiarioActivity" />
+        <activity android:name=".RelatorioSemanalActivity"></activity>
     </application>
 
 </manifest>

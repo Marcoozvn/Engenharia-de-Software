@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,7 +23,6 @@ import android.widget.ArrayAdapter;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.Toast;
 
 import com.example.marcos.medicamentalert.bancoDados.Banco;
 
@@ -35,15 +33,15 @@ import java.util.List;
  * Created by Marcos on 22/07/2017.
  */
 
-public class listaMedicamentosActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class RelatorioSemanalActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     public static Banco bd;
-    public static ListAdapter adapter;
+    public static RelatorioListAdapter adapter;
     NavigationView navigationView = null;
     Toolbar toolbar = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_medicament_list);
+        setContentView(R.layout.activity_relatorio_semanal);
         //navegation viewr menu
 
         MainFragment fragment = new MainFragment();
@@ -53,15 +51,15 @@ public class listaMedicamentosActivity extends AppCompatActivity implements Navi
         fragmentTransaction.commit();
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
 
         //FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fabb);
         //fab2.setOnClickListener(new View.OnClickListener() {
-         //   @Override
-          //  public void onClick(View view) {
-             //   Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-               //         .setAction("Action", null).show();
-           // }
+        //   @Override
+        //  public void onClick(View view) {
+        //   Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+        //         .setAction("Action", null).show();
+        // }
         //});
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -81,19 +79,16 @@ public class listaMedicamentosActivity extends AppCompatActivity implements Navi
 
         //fim navegation viewr
         bd = new Banco(this);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Medicamentos");
-        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_menu_white_24dp));
 
 
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_layour_recycler);
+
+        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_layour_recycler3);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
 
         // Adiciona o adapter que irá anexar os objetos à lista.
         // Está sendo criado com lista vazia, pois será preenchida posteriormente.
-        adapter = new ListAdapter(bd.getMedicamentosNoBanco());
+        adapter = new RelatorioListAdapter(bd.getMedicamentosDaSemana());
         mRecyclerView.setAdapter(adapter);
 
         // Configurando um dividr entre linhas, para uma melhor visualização.
@@ -136,8 +131,7 @@ public class listaMedicamentosActivity extends AppCompatActivity implements Navi
         return super.onOptionsItemSelected(item);
     }
 
-
-        @SuppressWarnings("StatementWithEmptyBody")
+    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -174,10 +168,10 @@ public class listaMedicamentosActivity extends AppCompatActivity implements Navi
         }
     };
 
-        //SQLiteDatabase db = MainActivity.bd.getWritableDatabase();
-        //Cursor cursor = db.rawQuery("SELECT * from tabela_medicamentos", null);
-        //ListCursorAdapter adapter = new ListCursorAdapter(this, cursor);
-        //listaDeMedicamentos.setAdapter(adapter);
+    //SQLiteDatabase db = MainActivity.bd.getWritableDatabase();
+    //Cursor cursor = db.rawQuery("SELECT * from tabela_medicamentos", null);
+    //ListCursorAdapter adapter = new ListCursorAdapter(this, cursor);
+    //listaDeMedicamentos.setAdapter(adapter);
 
 
 

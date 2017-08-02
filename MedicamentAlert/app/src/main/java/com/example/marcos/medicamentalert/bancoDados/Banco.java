@@ -83,6 +83,38 @@ public class Banco extends SQLiteOpenHelper{
         return medicamentos;
     }
 
+    public List<Medicamento> getMedicamentosDoDia(){
+        List<Medicamento> medicamentos = new ArrayList<>();
+        Cursor cursor = this.getWritableDatabase().rawQuery("SELECT * FROM " + TABELA_MEDICAMENTOS, null);
+        while (cursor.moveToNext()){
+            int id = cursor.getInt(cursor.getColumnIndex(COLUNA_CODIGO));
+            String nome = cursor.getString(cursor.getColumnIndex(COLUNA_NOME));
+            float dosagem = cursor.getFloat(cursor.getColumnIndex(COLUNA_DOSAGEM));
+            String metricaDosagem = cursor.getString(cursor.getColumnIndex(COLUNA_METRICADOSAGEM));
+            Medicamento medicamento = new Medicamento(nome, dosagem, metricaDosagem);
+            medicamento.setCodigo(id);
+            medicamentos.add(medicamento);
+        }
+        cursor.close();
+        return medicamentos;
+    }
+
+    public List<Medicamento> getMedicamentosDaSemana(){
+        List<Medicamento> medicamentos = new ArrayList<>();
+        Cursor cursor = this.getWritableDatabase().rawQuery("SELECT * FROM " + TABELA_MEDICAMENTOS, null);
+        while (cursor.moveToNext()){
+            int id = cursor.getInt(cursor.getColumnIndex(COLUNA_CODIGO));
+            String nome = cursor.getString(cursor.getColumnIndex(COLUNA_NOME));
+            float dosagem = cursor.getFloat(cursor.getColumnIndex(COLUNA_DOSAGEM));
+            String metricaDosagem = cursor.getString(cursor.getColumnIndex(COLUNA_METRICADOSAGEM));
+
+            Medicamento medicamento = new Medicamento(nome, dosagem, metricaDosagem);
+            medicamento.setCodigo(id);
+            medicamentos.add(medicamento);
+        }
+        cursor.close();
+        return medicamentos;
+    }
     public void removeMedicamento(Medicamento medicamento){
         SQLiteDatabase db = this.getWritableDatabase();
         int codigo = medicamento.getCodigo();
