@@ -17,10 +17,8 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextClock;
+import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +32,7 @@ public class CadastroMedicamentosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cadastro_medicamentos);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.mytoolbar);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.mytoolbarCadastro);
         setSupportActionBar(myToolbar);
         getSupportActionBar().setTitle("Cadastro de Medicamentos");
         myToolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_clear_white_24dp));
@@ -49,7 +47,7 @@ public class CadastroMedicamentosActivity extends AppCompatActivity {
         // Apply the adapter to the spinner
         spinnerFrequencia.setAdapter(adapterSpinnerFrequencia);
         */
-        Spinner spinnerDosagem = (Spinner) findViewById(R.id.spinnerDosagem);
+        Spinner spinnerDosagem = (Spinner) findViewById(R.id.spinnerDosagem_cadastro);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> adapterSpinnerDosagem = ArrayAdapter.createFromResource(this,
                 R.array.dosagem_array, android.R.layout.simple_spinner_item);
@@ -58,12 +56,12 @@ public class CadastroMedicamentosActivity extends AppCompatActivity {
         // Apply the adapter to the spinner
         spinnerDosagem.setAdapter(adapterSpinnerDosagem);
 
-        Button salvar = (Button) findViewById(R.id.salvar);
+        Button salvar = (Button) findViewById(R.id.salvarCadastro);
         salvar.setOnClickListener(salvarOnClickListener);
 
-        Button adicionaHorario = (Button) findViewById(R.id.botaoAdicionaHorario);
+        Button adicionaHorario = (Button) findViewById(R.id.botaoAdicionaHorario_cadastro);
         adicionaHorario.setOnClickListener(adicionaHorarioOnClickListener);
-        TextClock textClock = (TextClock) findViewById(R.id.textClock1);
+        TextView textClock = (TextView) findViewById(R.id.textClock1);
         textClock.setOnClickListener(escolheHorarioOnClickListener);
 
     }
@@ -84,7 +82,7 @@ public class CadastroMedicamentosActivity extends AppCompatActivity {
         public void onClick(View v) {
             if (numTextClocks < 7){
                 RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout3);
-                TextClock textClockaux = new TextClock(getApplicationContext());
+                TextView textClockaux = new TextClock(getApplicationContext());
                 RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
                 layoutParams.addRule(RelativeLayout.BELOW, ultimoTextClock);
                 textClockaux.setLayoutParams(layoutParams);
@@ -132,20 +130,20 @@ public class CadastroMedicamentosActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             Boolean camposPreenchidos = true;
-            EditText viewNomeMedicamento = (EditText) findViewById(R.id.form_nomeMedicamento);
+            EditText viewNomeMedicamento = (EditText) findViewById(R.id.form_nomeMedicamento_cadastro);
             if( viewNomeMedicamento.getText().toString().length() == 0 ) {
                 camposPreenchidos = false;
                 viewNomeMedicamento.setError("Por favor, digite o nome do medicamento!");
             }
             //EditText viewNomeMedico = (EditText) findViewById(R.id.form_nomeMedico);
-            EditText viewDosagem = (EditText) findViewById(R.id.form_quantidadeDosagem);
+            EditText viewDosagem = (EditText) findViewById(R.id.form_quantidadeDosagem_cadastro);
             if( viewDosagem.getText().toString().length() == 0 ) {
                 camposPreenchidos = false;
                 viewDosagem.setError("Por favor, digite a dosagem!");
             }
 
             if (camposPreenchidos) {
-                Spinner spinnerDosagem = (Spinner) findViewById(R.id.spinnerDosagem);
+                Spinner spinnerDosagem = (Spinner) findViewById(R.id.spinnerDosagem_cadastro);
                 String nomeMedicamento = viewNomeMedicamento.getText().toString();
                 //String nomeMedico = viewNomeMedico.getText().toString();
                 String dosagem = viewDosagem.getText().toString();
@@ -155,18 +153,18 @@ public class CadastroMedicamentosActivity extends AppCompatActivity {
                 Map<String, Boolean> alarmes = new HashMap<>();
                 for (int i = 1; i <= numTextClocks; i++){
                     System.out.print(numTextClocks + " - " + i);
-                    TextClock textclock = (TextClock) findViewById(retornaId(i));
+                    TextView textclock = (TextView) findViewById(retornaId(i));
                     alarmes.put(textclock.getText().toString(), false);
                 }
                 medicamento.setAlarmes(alarmes);
 
-                listaMedicamentosActivity.bd.addMedicamento(medicamento);
-                listaMedicamentosActivity.adapter.adicionaMedicamento(medicamento);
+                listaMedicamentosActivity.bd.salvarMedicamento(medicamento);
+                listaMedicamentosActivity.adapter.guardaMedicamento(medicamento);
 
-                Switch switchAlarme = (Switch) findViewById(R.id.switch_acionarAlarme);
+                Switch switchAlarme = (Switch) findViewById(R.id.switch_acionarAlarme_cadastro);
                 if (switchAlarme.isChecked()){
                     for (int i = 1; i <= numTextClocks; i++){
-                        TextClock textclock = (TextClock) findViewById(retornaId(i));
+                        TextView textclock = (TextView) findViewById(retornaId(i));
                         configuraAlarme(textclock);
                     }
                 }
@@ -196,7 +194,7 @@ public class CadastroMedicamentosActivity extends AppCompatActivity {
         return 0;
     }
 
-    private void configuraAlarme(TextClock textClock) {
+    private void configuraAlarme(TextView textClock) {
         Intent i = new Intent(this, ReceptorAlarme.class);
         PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, 0);
         AlarmManager gerenciador = (AlarmManager) getSystemService(Context.ALARM_SERVICE);

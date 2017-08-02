@@ -7,4 +7,12 @@
     <item name="textClock5" type="id"/>
     <item name="textClock6" type="id"/>
     <item name="textClock7" type="id"/>
+    <item name="textClockEdicao1" type="id"/>
+    <item name="textClockEdicao2" type="id"/>
+    <item name="textClockEdicao3" type="id"/>
+    <item name="textClockEdicao4" type="id"/>
+    <item name="textClockEdicao5" type="id"/>
+    <item name="textClockEdicao6" type="id"/>
+    <item name="textClockEdicao7" type="id"/>
+
 </resources>

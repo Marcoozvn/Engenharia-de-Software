@@ -8,7 +8,7 @@ import java.util.Map;
  */
 
 public class Medicamento {
-    int codigo;
+    private int codigo;
     private String nome;
     //private String medicoResponsavel;
     private float dosagem;
@@ -16,7 +16,6 @@ public class Medicamento {
     private Map<String, Boolean> alarmes;
 
     public Medicamento(String nome, float dosagem, String metricaDosagem){
-        this.codigo = this.hashCode();
         this.nome = nome;
         //this.medicoResponsavel = medicoResponsavel;
         this.dosagem = dosagem;
@@ -40,6 +39,18 @@ public class Medicamento {
 
     public void setAlarmes(Map<String, Boolean> alarmes){
         this.alarmes = alarmes;
+    }
+
+    public void setNome(String nome){
+        this.nome = nome;
+    }
+
+    public void setDosagem(float dosagem){
+        this.dosagem = dosagem;
+    }
+
+    public void setMetricaDosagem(String metricaDosagem){
+        this.metricaDosagem = metricaDosagem;
     }
 
     public void tomouMedicamento(String horario){

@@ -25,6 +25,7 @@
         <activity android:name=".ListagemConsultas"></activity>
         <activity android:name=".CadastroMedicamentosActivity" android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:theme="@style/Theme.AppCompat.Light.Dialog.MinWidth" android:name=".AlarmeActivity"></activity>
+        <activity android:name=".EdicaoMedicamentosActivity" android:theme="@style/AppTheme.NoActionBar"/>
         </receiver>
     </application>
 
