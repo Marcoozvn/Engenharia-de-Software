@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.design.widget.FloatingActionButton;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,8 +29,10 @@ import com.example.marcos.medicamentalert.bancoDados.Banco;
 public class listaMedicamentosActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     public static Banco bd;
     public static ListAdapter adapter;
-    NavigationView navigationView = null;
-    Toolbar toolbar = null;
+    private static RecyclerView mRecyclerView;
+    private NavigationView navigationView = null;
+    private Toolbar toolbar = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,11 +50,11 @@ public class listaMedicamentosActivity extends AppCompatActivity implements Navi
 
         //FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fabb);
         //fab2.setOnClickListener(new View.OnClickListener() {
-         //   @Override
-          //  public void onClick(View view) {
-             //   Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-               //         .setAction("Action", null).show();
-           // }
+        //   @Override
+        //  public void onClick(View view) {
+        //   Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+        //         .setAction("Action", null).show();
+        // }
         //});
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -71,13 +74,14 @@ public class listaMedicamentosActivity extends AppCompatActivity implements Navi
 
         //fim navegation viewr
         bd = new Banco(this);
+        /*
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Medicamentos");
         toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_menu_white_24dp));
+        */
 
-
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_layour_recycler);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_layour_recycler);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
 
@@ -127,14 +131,14 @@ public class listaMedicamentosActivity extends AppCompatActivity implements Navi
     }
 
 
-        @SuppressWarnings("StatementWithEmptyBody")
+    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
         if (id == R.id.nav_Medicamentos) {
-            Intent in=new Intent(getBaseContext(),listaMedicamentosActivity.class);
+            Intent in=new Intent(getBaseContext(), com.example.marcos.medicamentalert.activities.listaMedicamentosActivity.class);
             startActivity(in);
 
         } else if (id == R.id.nav_relatorio_semanal) {
@@ -163,11 +167,15 @@ public class listaMedicamentosActivity extends AppCompatActivity implements Navi
             getApplicationContext().startActivity(intent);
         }
     };
-           //SQLiteDatabase db = MainActivity.bd.getWritableDatabase();
-        //Cursor cursor = db.rawQuery("SELECT * from tabela_medicamentos", null);
-        //ListCursorAdapter adapter = new ListCursorAdapter(this, cursor);
-        //listaDeMedicamentos.setAdapter(adapter);
+    //SQLiteDatabase db = MainActivity.bd.getWritableDatabase();
+    //Cursor cursor = db.rawQuery("SELECT * from tabela_medicamentos", null);
+    //ListCursorAdapter adapter = new ListCursorAdapter(this, cursor);
+    //listaDeMedicamentos.setAdapter(adapter);
 
-
-
+    public static void medicamentoTomado(String horario, int id){
+        bd.atualizaTabelaHorario(horario, id);
+        adapter = new ListAdapter(bd.getMedicamentosNoBanco());
+        mRecyclerView.setAdapter(adapter);
+        Log.i("Alarme", "medicamento tomado");
+    }
 }

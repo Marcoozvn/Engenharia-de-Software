@@ -35,13 +35,13 @@ public class ConsultaActivity extends AppCompatActivity {
         }
         return Consultas;
     }
-
-
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consulta);
+        getSupportActionBar().setTitle("Cadastro Consulta");
         getInstance();
 
     }

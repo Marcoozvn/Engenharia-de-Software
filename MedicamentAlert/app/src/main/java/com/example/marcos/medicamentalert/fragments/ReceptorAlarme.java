@@ -25,8 +25,13 @@ public class ReceptorAlarme extends BroadcastReceiver {
     static Ringtone ringtone;
     @Override
     public void onReceive(Context context, Intent intent) {
+        //String horario = intent.getStringExtra("horario");
+        //int id = intent.getIntExtra("id", 0);
         Log.i("Alarme", "Alarme recebido");
         Intent i = new Intent(context, AlarmeActivity.class);
+        i.putExtras(intent);
+        //i.putExtra("horario", horario);
+       // i.putExtra("id", id);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         geraNotificacao(context);
         Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
