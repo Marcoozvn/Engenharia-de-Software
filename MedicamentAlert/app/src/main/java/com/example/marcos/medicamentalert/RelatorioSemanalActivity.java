@@ -51,7 +51,7 @@ public class RelatorioSemanalActivity extends AppCompatActivity implements Navig
         fragmentTransaction.commit();
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-
+        setSupportActionBar(toolbar);
 
         //FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fabb);
         //fab2.setOnClickListener(new View.OnClickListener() {
