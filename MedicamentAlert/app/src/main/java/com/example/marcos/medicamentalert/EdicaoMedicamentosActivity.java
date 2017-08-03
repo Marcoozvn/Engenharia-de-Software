@@ -259,7 +259,7 @@ public class EdicaoMedicamentosActivity extends AppCompatActivity {
             if (switchAlarme.isChecked()){
                 for (int i = 1; i <= numTextClocks; i++){
                     TextView textclock = (TextView) findViewById(retornaId(i));
-                    configuraAlarme(textclock);
+                    configuraAlarme(textclock, medicamento.hashCode(), nomeMedicamento, Float.valueOf(dosagem), dosagemMetrica, i);
                 }
             }
 
@@ -289,9 +289,15 @@ public class EdicaoMedicamentosActivity extends AppCompatActivity {
         return 0;
     }
 
-    private void configuraAlarme(TextView textClock) {
+    private void configuraAlarme(TextView textClock, int id, String nomeMedicamento, Float dosagem, String dosagemMetrica, int count) {
         Intent i = new Intent(this, ReceptorAlarme.class);
-        PendingIntent pi = PendingIntent.getBroadcast(this, 0, i, 0);
+        i.putExtra("horario", textClock.getText().toString());
+        i.putExtra("id", id);
+        i.putExtra("nomeMedicamento", nomeMedicamento);
+        i.putExtra("dosagem", dosagem);
+        i.putExtra("metricaDosagem", dosagemMetrica);
+        i.putExtra("count", count);
+        PendingIntent pi = PendingIntent.getBroadcast(this, id + count, i, 0);
         AlarmManager gerenciador = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Calendar cal = Calendar.getInstance();
 

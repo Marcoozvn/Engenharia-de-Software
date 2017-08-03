@@ -211,7 +211,8 @@ public class CadastroMedicamentosActivity extends AppCompatActivity {
         i.putExtra("nomeMedicamento", nome);
         i.putExtra("dosagem", dosagem);
         i.putExtra("metricaDosagem", metricaDosagem);
-        PendingIntent pi = PendingIntent.getBroadcast(this, count, i, 0);
+        i.putExtra("count", count);
+        PendingIntent pi = PendingIntent.getBroadcast(this, id + count, i, 0);
         AlarmManager gerenciador = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Calendar cal = Calendar.getInstance();
 
@@ -229,5 +230,6 @@ public class CadastroMedicamentosActivity extends AppCompatActivity {
                 AlarmManager.INTERVAL_DAY, pi);
 
         Log.i("Alarme!", "Alarme setado " + cal.getTime().toString());
+        Log.i("Request code", String.valueOf(count+id));
     }
 }

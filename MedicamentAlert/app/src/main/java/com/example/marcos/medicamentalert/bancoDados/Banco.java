@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -19,7 +21,7 @@ import models.Medicamento;
 
 public class Banco extends SQLiteOpenHelper{
     private static final int VERSAO_BANCO = 1;
-    private static final String BD_MEDICAMENTOS = "bancodeDados1";
+    private static final String BD_MEDICAMENTOS = "bancodeDados2";
     private static final String TABELA_MEDICAMENTOS = "tabela_medicamentos";
     private static final String TABELA_HORARIOS = "tabela_horarios";
     private static final String COLUNA_CODIGO = "_id";
@@ -165,7 +167,7 @@ public class Banco extends SQLiteOpenHelper{
         ContentValues values = new ContentValues();
         values.put(COLUNA_STATUS, "true");
         int i = db.update(TABELA_HORARIOS, values, COLUNA_CODIGO + "=" + id + " AND " + COLUNA_HORARIO + "= '" + horario + "'", null);
-        System.out.print(i);
+        Log.i("afetados", String.valueOf(i));
         /*
         db.rawQuery("UPDATE " + TABELA_HORARIOS + " SET " + COLUNA_STATUS + " = true WHERE " + COLUNA_CODIGO +
         " = " + id + " AND " + COLUNA_HORARIO + " = " + horario, null);
