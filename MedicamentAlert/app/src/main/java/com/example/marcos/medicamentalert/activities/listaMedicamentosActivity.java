@@ -73,7 +73,6 @@ public class listaMedicamentosActivity extends AppCompatActivity implements Navi
         navigationView.setNavigationItemSelectedListener(this);
 
         //fim navegation viewr
-        bd = new Banco(this);
         /*
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -87,6 +86,7 @@ public class listaMedicamentosActivity extends AppCompatActivity implements Navi
 
         // Adiciona o adapter que irá anexar os objetos à lista.
         // Está sendo criado com lista vazia, pois será preenchida posteriormente.
+        bd = new Banco(this);
         adapter = new ListAdapter(bd.getMedicamentosNoBanco());
         mRecyclerView.setAdapter(adapter);
 
@@ -151,7 +151,8 @@ public class listaMedicamentosActivity extends AppCompatActivity implements Navi
             startActivity(in);
 
         } else if (id == R.id.nav_consultas) {
-
+            Intent in=new Intent(getBaseContext(),ListagemConsultas.class);
+            startActivity(in);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

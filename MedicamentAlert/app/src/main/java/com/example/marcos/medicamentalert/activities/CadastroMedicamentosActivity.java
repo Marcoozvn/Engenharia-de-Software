@@ -27,6 +27,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.example.marcos.medicamentalert.models.Consulta;
 import com.example.marcos.medicamentalert.models.Medicamento;
 
 public class CadastroMedicamentosActivity extends AppCompatActivity {
@@ -174,6 +175,9 @@ public class CadastroMedicamentosActivity extends AppCompatActivity {
 
                 listaMedicamentosActivity.bd.salvarMedicamento(medicamento);
                 listaMedicamentosActivity.adapter.guardaMedicamento(medicamento);
+                Intent intent = getIntent();
+                Consulta consulta = (Consulta) intent.getSerializableExtra("Nova_consulta");
+                listaMedicamentosActivity.bd.salvarConsulta(consulta);
 
                 Switch switchAlarme = (Switch) findViewById(R.id.switch_acionarAlarme_cadastro);
                 if (switchAlarme.isChecked()){

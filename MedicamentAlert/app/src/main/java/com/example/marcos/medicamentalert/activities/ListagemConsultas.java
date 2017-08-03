@@ -15,12 +15,13 @@ import com.example.marcos.medicamentalert.models.Consulta;
 
 public class ListagemConsultas extends AppCompatActivity {
 
-    public LineAdapter_Consultas adapter;
+    public static LineAdapter_Consultas adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recycler_view);
+        getSupportActionBar().setTitle("Consultas");
 
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_layour_recycler);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -28,8 +29,7 @@ public class ListagemConsultas extends AppCompatActivity {
 
         // Adiciona o adapter que irá anexar os objetos à lista.
         // Está sendo criado com lista vazia, pois será preenchida posteriormente.
-        List<Consulta> a = ConsultaActivity.getInstance();
-        adapter = new LineAdapter_Consultas(ConsultaActivity.getInstance());
+        adapter = new LineAdapter_Consultas(listaMedicamentosActivity.bd.getConsultaNoBanco());
         mRecyclerView.setAdapter(adapter);
 
         // Configurando um dividr entre linhas, para uma melhor visualização.

@@ -1,11 +1,14 @@
 package com.example.marcos.medicamentalert.models;
 
+import java.io.Serializable;
+
 /**
  * Created by Lucas Wilker on 28/07/2017.
  */
 
-public class Consulta {
+public class Consulta implements Serializable{
 
+    private int codigo;
     private String tipoConsulta;
     private String horarioConsulta;
     private String localizacao;
@@ -28,6 +31,7 @@ public class Consulta {
         this.horarioConsulta    = horarioConsulta;
     }
 
+    public int getCodigo(){return codigo;}
 
     public String getTipoConsulta() {
         return tipoConsulta;
@@ -47,6 +51,11 @@ public class Consulta {
 
     public String getTelefone() {
         return telefone;
+    }
+
+
+    public void setCodigo(int codigo){
+        this.codigo = codigo;
     }
 
     public void setTipoConsulta(String tipoConsulta) {

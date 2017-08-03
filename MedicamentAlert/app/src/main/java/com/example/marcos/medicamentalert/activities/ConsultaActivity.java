@@ -20,7 +20,10 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import com.example.marcos.medicamentalert.adapters.LineAdapter_Consultas;
 import com.example.marcos.medicamentalert.models.Consulta;
+
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class ConsultaActivity extends AppCompatActivity {
 
@@ -28,6 +31,7 @@ public class ConsultaActivity extends AppCompatActivity {
     private static List<Consulta> Consultas;
     private Button btn_horario;
     private Calendar dateTime = Calendar.getInstance();
+    private Intent intent_listagem;
 
     public static List<Consulta> getInstance(){
         if (Consultas == null){
@@ -35,7 +39,7 @@ public class ConsultaActivity extends AppCompatActivity {
         }
         return Consultas;
     }
-    
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,11 +97,15 @@ public class ConsultaActivity extends AppCompatActivity {
 
             //criar consulta perfeita
             Consulta nova_consulta = new Consulta(tipo_consulta, horario_consulta, localizacao_consulta, email_consulta, telefone_consulta);
-            Consultas.add(nova_consulta);
-            //voltar pra intent anterior
+            //Consultas.add(nova_consulta);
             //salva no bd
-            //intentMedicamento(view);
+            //listaMedicamentosActivity.bd.salvarConsulta(nova_consulta);
+            //salva no adapter
+            //ListagemConsultas.adapter.guardaConsulta(nova_consulta);
+            intent_listagem = new Intent(this, CadastroMedicamentosActivity.class);
+            intent_listagem.putExtra("Nova_consulta", nova_consulta);
             exibirMensagem("Consulta Salva com Sucesso");
+            //voltar pra intent anterior
             intentListagem(view);
 
         }
@@ -105,7 +113,6 @@ public class ConsultaActivity extends AppCompatActivity {
     }
 
     public void intentListagem(View v){
-        Intent intent_listagem = new Intent(this, ListagemConsultas.class);
         startActivity(intent_listagem);
     }
 
