@@ -91,8 +91,8 @@ public class relatorioDiarioActivity extends AppCompatActivity implements Naviga
         mRecyclerView.addItemDecoration(
                 new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(cadastraMedicamentoOnClickListener);
+        //FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+       // fab.setOnClickListener(cadastraMedicamentoOnClickListener);
     }
 
     @Override
