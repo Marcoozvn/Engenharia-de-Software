@@ -43,7 +43,7 @@ public class RelatorioSemanalActivity extends AppCompatActivity implements Navig
         fragmentTransaction.commit();
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-
+        setSupportActionBar(toolbar);
 
         //FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fabb);
         //fab2.setOnClickListener(new View.OnClickListener() {
@@ -87,8 +87,8 @@ public class RelatorioSemanalActivity extends AppCompatActivity implements Navig
         mRecyclerView.addItemDecoration(
                 new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(cadastraMedicamentoOnClickListener);
+        //FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        //fab.setOnClickListener(cadastraMedicamentoOnClickListener);
     }
 
     @Override

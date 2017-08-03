@@ -2,11 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/MedicamentAlert.iml" filepath="$PROJECT_DIR$/MedicamentAlert.iml" />
+      <module fileurl="file://F:/clonando de novo/Engenharia-de-Software/MedicamentAlert/MedicamentAlert.iml" filepath="F:/clonando de novo/Engenharia-de-Software/MedicamentAlert/MedicamentAlert.iml" />
       <module fileurl="file://F:\repositorio2\Engenharia-de-Software\MedicamentAlert\MedicamentAlert.iml" filepath="F:\repositorio2\Engenharia-de-Software\MedicamentAlert\MedicamentAlert.iml" />
-      <module fileurl="file://F:\clonando de novo\Engenharia-de-Software\MedicamentAlert\MedicamentAlert.iml" filepath="F:\clonando de novo\Engenharia-de-Software\MedicamentAlert\MedicamentAlert.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://F:\clonando de novo\Engenharia-de-Software\MedicamentAlert\app\app.iml" filepath="F:\clonando de novo\Engenharia-de-Software\MedicamentAlert\app\app.iml" />
+      <module fileurl="file://F:/clonando de novo/Engenharia-de-Software/MedicamentAlert/app/app.iml" filepath="F:/clonando de novo/Engenharia-de-Software/MedicamentAlert/app/app.iml" />
       <module fileurl="file://F:\repositorio2\Engenharia-de-Software\MedicamentAlert\app\app.iml" filepath="F:\repositorio2\Engenharia-de-Software\MedicamentAlert\app\app.iml" />
     </modules>
   </component>

@@ -41,7 +41,8 @@ public class relatorioDiarioActivity extends AppCompatActivity implements Naviga
         fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.commit();
 
-
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         //FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fabb);
         //fab2.setOnClickListener(new View.OnClickListener() {
@@ -53,6 +54,11 @@ public class relatorioDiarioActivity extends AppCompatActivity implements Naviga
         //});
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
 
 
 
@@ -82,8 +88,8 @@ public class relatorioDiarioActivity extends AppCompatActivity implements Naviga
         mRecyclerView.addItemDecoration(
                 new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(cadastraMedicamentoOnClickListener);
+       // FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        //fab.setOnClickListener(cadastraMedicamentoOnClickListener);
     }
 
     @Override
