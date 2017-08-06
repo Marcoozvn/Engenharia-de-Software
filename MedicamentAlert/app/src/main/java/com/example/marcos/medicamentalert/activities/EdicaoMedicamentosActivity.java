@@ -1,4 +1,4 @@
-package com.example.marcos.medicamentalert;
+package com.example.marcos.medicamentalert.activities;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -19,12 +19,16 @@ import android.widget.Switch;
 import android.widget.TextClock;
 import android.widget.TextView;
 
+import com.example.marcos.medicamentalert.R;
+import com.example.marcos.medicamentalert.fragments.ReceptorAlarme;
+import com.example.marcos.medicamentalert.fragments.TimePickerFragment;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-import models.Medicamento;
+import com.example.marcos.medicamentalert.models.Medicamento;
 
 /**
  * Created by Marcos on 01/08/2017.

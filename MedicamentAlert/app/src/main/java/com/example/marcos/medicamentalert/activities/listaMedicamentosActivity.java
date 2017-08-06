@@ -1,9 +1,6 @@
-package com.example.marcos.medicamentalert;
+package com.example.marcos.medicamentalert.activities;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -15,33 +12,31 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.CursorAdapter;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 
+import com.example.marcos.medicamentalert.adapters.ListAdapter;
+import com.example.marcos.medicamentalert.fragments.MainFragment;
+import com.example.marcos.medicamentalert.R;
 import com.example.marcos.medicamentalert.bancoDados.Banco;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Marcos on 22/07/2017.
  */
 
-public class RelatorioSemanalActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class listaMedicamentosActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     public static Banco bd;
-    public static RelatorioListAdapter adapter;
-    NavigationView navigationView = null;
-    Toolbar toolbar = null;
+    public static ListAdapter adapter;
+    private static RecyclerView mRecyclerView;
+    private NavigationView navigationView = null;
+    private Toolbar toolbar = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_relatorio_semanal);
+        setContentView(R.layout.activity_medicament_list);
         //navegation viewr menu
 
         MainFragment fragment = new MainFragment();
@@ -51,7 +46,7 @@ public class RelatorioSemanalActivity extends AppCompatActivity implements Navig
         fragmentTransaction.commit();
 
         toolbar = (Toolbar) findViewById(R.id.toolbar);
-
+        setSupportActionBar(toolbar);
 
         //FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fabb);
         //fab2.setOnClickListener(new View.OnClickListener() {
@@ -78,17 +73,21 @@ public class RelatorioSemanalActivity extends AppCompatActivity implements Navig
         navigationView.setNavigationItemSelectedListener(this);
 
         //fim navegation viewr
-        bd = new Banco(this);
+        /*
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Medicamentos");
+        toolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_menu_white_24dp));
+        */
 
-
-
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_layour_recycler3);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_layour_recycler);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
 
         // Adiciona o adapter que irá anexar os objetos à lista.
         // Está sendo criado com lista vazia, pois será preenchida posteriormente.
-        adapter = new RelatorioListAdapter(bd.getMedicamentosDaSemana());
+        bd = new Banco(this);
+        adapter = new ListAdapter(bd.getMedicamentosNoBanco());
         mRecyclerView.setAdapter(adapter);
 
         // Configurando um dividr entre linhas, para uma melhor visualização.
@@ -131,6 +130,7 @@ public class RelatorioSemanalActivity extends AppCompatActivity implements Navig
         return super.onOptionsItemSelected(item);
     }
 
+
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -138,7 +138,7 @@ public class RelatorioSemanalActivity extends AppCompatActivity implements Navig
         int id = item.getItemId();
 
         if (id == R.id.nav_Medicamentos) {
-            Intent in=new Intent(getBaseContext(),listaMedicamentosActivity.class);
+            Intent in=new Intent(getBaseContext(), com.example.marcos.medicamentalert.activities.listaMedicamentosActivity.class);
             startActivity(in);
 
         } else if (id == R.id.nav_relatorio_semanal) {
@@ -151,7 +151,8 @@ public class RelatorioSemanalActivity extends AppCompatActivity implements Navig
             startActivity(in);
 
         } else if (id == R.id.nav_consultas) {
-
+            Intent in=new Intent(getBaseContext(),ListagemConsultas.class);
+            startActivity(in);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -167,12 +168,15 @@ public class RelatorioSemanalActivity extends AppCompatActivity implements Navig
             getApplicationContext().startActivity(intent);
         }
     };
-
     //SQLiteDatabase db = MainActivity.bd.getWritableDatabase();
     //Cursor cursor = db.rawQuery("SELECT * from tabela_medicamentos", null);
     //ListCursorAdapter adapter = new ListCursorAdapter(this, cursor);
     //listaDeMedicamentos.setAdapter(adapter);
 
-
-
+    public static void medicamentoTomado(String horario, int id){
+        bd.atualizaTabelaHorario(horario, id);
+        adapter = new ListAdapter(bd.getMedicamentosNoBanco());
+        mRecyclerView.setAdapter(adapter);
+        Log.i("Alarme", "medicamento tomado");
+    }
 }

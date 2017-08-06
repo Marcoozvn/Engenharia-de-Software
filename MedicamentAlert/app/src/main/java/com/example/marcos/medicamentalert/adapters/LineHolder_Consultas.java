@@ -1,9 +1,11 @@
-package com.example.marcos.medicamentalert;
+package com.example.marcos.medicamentalert.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+
+import com.example.marcos.medicamentalert.R;
 
 /**
  * Created by Lucas Wilker on 31/07/2017.

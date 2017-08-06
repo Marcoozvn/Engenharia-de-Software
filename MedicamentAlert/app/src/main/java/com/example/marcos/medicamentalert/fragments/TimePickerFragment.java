@@ -1,4 +1,4 @@
-package com.example.marcos.medicamentalert;
+package com.example.marcos.medicamentalert.fragments;
 
 import android.app.TimePickerDialog;
 import android.os.Bundle;
@@ -11,6 +11,8 @@ import java.util.Calendar;
 
 import android.widget.TextView;
 import android.widget.TimePicker;
+
+import com.example.marcos.medicamentalert.R;
 
 
 /**

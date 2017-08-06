@@ -32,7 +32,7 @@
             android:layout_height="match_parent"
             android:background="#E0E0E0"
             android:padding="16dp"
-            tools:context="com.example.marcos.medicamentalert.EdicaoMedicamentosActivity"
+            tools:context="com.example.marcos.medicamentalert.activities.EdicaoMedicamentosActivity"
             android:scrollbars="vertical">
 
             <Button

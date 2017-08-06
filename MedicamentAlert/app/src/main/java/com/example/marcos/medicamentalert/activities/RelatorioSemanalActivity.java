@@ -1,39 +1,31 @@
-package com.example.marcos.medicamentalert;
+package com.example.marcos.medicamentalert.activities;
 
-        import android.app.Activity;
-        import android.content.Intent;
-        import android.database.Cursor;
-        import android.database.sqlite.SQLiteDatabase;
-        import android.os.Bundle;
-        import android.support.design.widget.NavigationView;
-        import android.support.v4.view.GravityCompat;
-        import android.support.v4.widget.DrawerLayout;
-        import android.support.v7.app.ActionBarDrawerToggle;
-        import android.support.v7.app.AppCompatActivity;
-        import android.support.v7.widget.DividerItemDecoration;
-        import android.support.v7.widget.LinearLayoutManager;
-        import android.support.v7.widget.RecyclerView;
-        import android.support.v7.widget.Toolbar;
-        import android.support.design.widget.FloatingActionButton;
-        import android.support.design.widget.Snackbar;
-        import android.view.Menu;
-        import android.view.MenuItem;
-        import android.view.View;
-        import android.widget.ArrayAdapter;
-        import android.widget.CursorAdapter;
-        import android.widget.ListView;
-        import android.widget.SimpleCursorAdapter;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.support.design.widget.FloatingActionButton;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 
-        import com.example.marcos.medicamentalert.bancoDados.Banco;
-
-        import java.util.ArrayList;
-        import java.util.List;
+import com.example.marcos.medicamentalert.fragments.MainFragment;
+import com.example.marcos.medicamentalert.R;
+import com.example.marcos.medicamentalert.adapters.RelatorioListAdapter;
+import com.example.marcos.medicamentalert.bancoDados.Banco;
 
 /**
  * Created by Marcos on 22/07/2017.
  */
 
-public class relatorioDiarioActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
+public class RelatorioSemanalActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     public static Banco bd;
     public static RelatorioListAdapter adapter;
     NavigationView navigationView = null;
@@ -41,7 +33,7 @@ public class relatorioDiarioActivity extends AppCompatActivity implements Naviga
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_relatorio_diario);
+        setContentView(R.layout.activity_relatorio_semanal);
         //navegation viewr menu
 
         MainFragment fragment = new MainFragment();
@@ -50,7 +42,8 @@ public class relatorioDiarioActivity extends AppCompatActivity implements Naviga
         fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.commit();
 
-
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         //FloatingActionButton fab2 = (FloatingActionButton) findViewById(R.id.fabb);
         //fab2.setOnClickListener(new View.OnClickListener() {
@@ -63,7 +56,10 @@ public class relatorioDiarioActivity extends AppCompatActivity implements Naviga
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
-
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.bringToFront();
@@ -78,21 +74,21 @@ public class relatorioDiarioActivity extends AppCompatActivity implements Naviga
 
 
 
-        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_layour_recycler2);
+        RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_layour_recycler3);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
 
         // Adiciona o adapter que irá anexar os objetos à lista.
         // Está sendo criado com lista vazia, pois será preenchida posteriormente.
-        adapter = new RelatorioListAdapter(bd.getMedicamentosDoDia());
+        adapter = new RelatorioListAdapter(bd.getMedicamentosDaSemana());
         mRecyclerView.setAdapter(adapter);
 
         // Configurando um dividr entre linhas, para uma melhor visualização.
         mRecyclerView.addItemDecoration(
                 new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(cadastraMedicamentoOnClickListener);
+        //FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        //fab.setOnClickListener(cadastraMedicamentoOnClickListener);
     }
 
     @Override

@@ -9,11 +9,11 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import models.Medicamento;
+import com.example.marcos.medicamentalert.models.Consulta;
+import com.example.marcos.medicamentalert.models.Medicamento;
 
 /**
  * Created by Marcos on 27/07/2017.
@@ -21,7 +21,8 @@ import models.Medicamento;
 
 public class Banco extends SQLiteOpenHelper{
     private static final int VERSAO_BANCO = 1;
-    private static final String BD_MEDICAMENTOS = "bancodeDados2";
+    private static final String BD_MEDICAMENTOS = "bancodeDados709";
+    //TABELA MEDICAMENTO
     private static final String TABELA_MEDICAMENTOS = "tabela_medicamentos";
     private static final String TABELA_HORARIOS = "tabela_horarios";
     private static final String COLUNA_CODIGO = "_id";
@@ -31,25 +32,68 @@ public class Banco extends SQLiteOpenHelper{
     private static final String COLUNA_HORARIO = "horario";
     private static final String COLUNA_STATUS = "status";
 
+    //TABELA CONSULTA
+    private static final String     TABELA_CONSULTA = "tabela_consultas";
+    private static final String COLUNA_CODIGO_CONSULTA = "id";
+    private static final String COLUNA_TIPO = "tipo";
+    private static final String COLUNA_HORARIO_CONSULTA = "coluna_horario_consulta";
+    private static final String COLUNA_LOCALIZACAO = "localizacao";
+    private static final String COLUNA_EMAIL = "email";
+    private static final String COLUNA_TELEFONE = "telefone";
+
+
     public Banco(Context context) {
         super(context, BD_MEDICAMENTOS, null, VERSAO_BANCO);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String QUERY_COLUNA = "CREATE TABLE " + TABELA_MEDICAMENTOS + "( " + COLUNA_CODIGO + " INTEGER PRIMARY KEY, " +
-                COLUNA_NOME + " TEXT, " + COLUNA_DOSAGEM + " FLOAT, " + COLUNA_METRICADOSAGEM + " TEXT)";
-        String QUERY_COLUNA2 = "CREATE TABLE " + TABELA_HORARIOS + "( " + COLUNA_HORARIO + " TEXT, " +
-                COLUNA_STATUS + " TEXT, " + COLUNA_CODIGO + " INTEGER," +
-                " FOREIGN KEY(" + COLUNA_CODIGO + ") REFERENCES tabela_medicamentos(" + COLUNA_CODIGO +"))";
+
+        String QUERY_COLUNA = criaTabelaMedicamentos();
+        String QUERY_COLUNA2 = criaTabelaHorarios();
+        String QUERY_CONSULTA = criaTabelaConsulta();
+
         //Criar aqui tabela de consultas
         db.execSQL(QUERY_COLUNA);
         db.execSQL(QUERY_COLUNA2);
+        db.execSQL(QUERY_CONSULTA);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
+    }
+
+    private String criaTabelaMedicamentos(){
+
+        String QUERY_COLUNA = "CREATE TABLE " + TABELA_MEDICAMENTOS + "( " +
+                COLUNA_CODIGO + " INTEGER PRIMARY KEY, " +
+                COLUNA_NOME + " TEXT, " +
+                COLUNA_DOSAGEM + " FLOAT, " +
+                COLUNA_METRICADOSAGEM + " TEXT)";
+        return QUERY_COLUNA;
+    }
+
+    private String criaTabelaHorarios(){
+        String QUERY_COLUNA2 = "CREATE TABLE " + TABELA_HORARIOS + "( " +
+                COLUNA_HORARIO + " TEXT, " +
+                COLUNA_STATUS + " TEXT, " +
+                COLUNA_CODIGO + " INTEGER," +
+                " FOREIGN KEY(" + COLUNA_CODIGO + ") REFERENCES tabela_medicamentos(" + COLUNA_CODIGO +"))";
+
+        return QUERY_COLUNA2;
+    }
+
+    private String criaTabelaConsulta(){
+
+        String query_consulta = "CREATE TABLE " + TABELA_CONSULTA + "( " +
+                COLUNA_CODIGO_CONSULTA + " INTEGER PRIMARY KEY, " +
+                COLUNA_TIPO + " TEXT, " +
+                COLUNA_HORARIO_CONSULTA + " TEXT, " +
+                COLUNA_LOCALIZACAO + " TEXT, " +
+                COLUNA_EMAIL + " TEXT, " +
+                COLUNA_TELEFONE + " TEXT)";
+        return query_consulta;
     }
 
     public void salvarMedicamento(Medicamento medicamento){
@@ -69,6 +113,20 @@ public class Banco extends SQLiteOpenHelper{
         }
         db.close();
     }
+
+    public void salvarConsulta(Consulta consulta){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUNA_CODIGO_CONSULTA, consulta.hashCode());
+        values.put(COLUNA_TIPO, consulta.getTipoConsulta());
+        values.put(COLUNA_HORARIO_CONSULTA, consulta.getHorarioConsulta());
+        values.put(COLUNA_LOCALIZACAO, consulta.getLocalizacao());
+        values.put(COLUNA_EMAIL, consulta.getEmail());
+        values.put(COLUNA_TELEFONE, consulta.getTelefone());
+        long insert1 = db.insert(TABELA_CONSULTA, null, values);
+        db.close();
+    }
+
 
     public void atualizaMedicamento(Medicamento medicamento){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -115,6 +173,36 @@ public class Banco extends SQLiteOpenHelper{
         return medicamentos;
     }
 
+
+    public List<Consulta> getConsultaNoBanco(){
+        List<Consulta> consultas = new ArrayList<>();
+        Cursor cursor = this.getWritableDatabase().rawQuery("SELECT * FROM " + TABELA_CONSULTA, null);
+        while (cursor.moveToNext()){
+            int id = cursor.getInt(cursor.getColumnIndex(COLUNA_CODIGO_CONSULTA));
+            String nome = cursor.getString(cursor.getColumnIndex(COLUNA_TIPO));
+            String horario = cursor.getString(cursor.getColumnIndex(COLUNA_HORARIO_CONSULTA));
+            String localizacao = cursor.getString(cursor.getColumnIndex(COLUNA_LOCALIZACAO));
+            String email = cursor.getString(cursor.getColumnIndex(COLUNA_EMAIL));
+            String telefone = cursor.getString(cursor.getColumnIndex(COLUNA_TELEFONE));
+            Consulta consulta = new Consulta(nome, horario, localizacao, email, telefone);
+            consulta.setCodigo(id);
+//            Cursor cursor1 = this.getWritableDatabase().rawQuery("SELECT horario, status FROM tabela_horarios WHERE " +
+//                    "tabela_horarios._id = " + String.valueOf(id), null);
+//            Map<String, Boolean> alarmes = new HashMap<>();
+//            while (cursor1.moveToNext()){
+//                String horario = cursor1.getString(cursor1.getColumnIndex(COLUNA_HORARIO));
+//                String status = cursor1.getString(cursor1.getColumnIndex(COLUNA_STATUS));
+//                alarmes.put(horario, Boolean.valueOf(status));
+//            }
+//            medicamento.setAlarmes(alarmes);
+            consultas.add(consulta);
+        }
+        cursor.close();
+        return consultas;
+    }
+
+
+
     public List<Medicamento> getMedicamentosDoDia(){
         List<Medicamento> medicamentos = new ArrayList<>();
         Cursor cursor = this.getWritableDatabase().rawQuery("SELECT * FROM " + TABELA_MEDICAMENTOS, null);
@@ -154,6 +242,13 @@ public class Banco extends SQLiteOpenHelper{
 
         db.close();
     }
+
+    public void removeConsulta(Consulta consulta){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABELA_CONSULTA, COLUNA_CODIGO_CONSULTA + "= ?", new String[]{String.valueOf(consulta.getCodigo())});
+        db.close();
+    }
+
 
     public void deleteTable(){
         SQLiteDatabase db = this.getWritableDatabase();

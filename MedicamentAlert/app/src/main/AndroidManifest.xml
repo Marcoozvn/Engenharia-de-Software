@@ -10,9 +10,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".listaMedicamentosActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            >
+            android:name=".activities.listaMedicamentosActivity"
+            android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -20,14 +19,14 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".ReceptorAlarme" />
-        <activity android:name=".ConsultaActivity" android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".ListagemConsultas" android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".CadastroMedicamentosActivity" android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:theme="@style/Theme.AppCompat.Light.Dialog.MinWidth" android:name=".AlarmeActivity"></activity>
-        <activity android:name=".EdicaoMedicamentosActivity" android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".relatorioDiarioActivity" />
-        <activity android:name=".RelatorioSemanalActivity"></activity>
+        <receiver android:name=".fragments.ReceptorAlarme" />
+        <activity android:name=".activities.ConsultaActivity" />
+        <activity android:name=".activities.ListagemConsultas"></activity>
+        <activity android:name=".activities.CadastroMedicamentosActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:theme="@style/Theme.AppCompat.Light.Dialog.MinWidth" android:name=".activities.AlarmeActivity"></activity>
+        <activity android:name=".activities.EdicaoMedicamentosActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activities.relatorioDiarioActivity" />
+        <activity android:name=".activities.RelatorioSemanalActivity"></activity>
     </application>
 
 </manifest>

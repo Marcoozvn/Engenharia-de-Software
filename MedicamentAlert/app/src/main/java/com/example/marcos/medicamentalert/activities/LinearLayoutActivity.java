@@ -1,9 +1,11 @@
-package com.example.marcos.medicamentalert;
+package com.example.marcos.medicamentalert.activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
+import com.example.marcos.medicamentalert.adapters.LineAdapter_Consultas;
 
 import java.util.ArrayList;
 

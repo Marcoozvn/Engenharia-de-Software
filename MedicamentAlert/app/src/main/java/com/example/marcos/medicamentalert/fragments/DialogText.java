@@ -1,7 +1,6 @@
-package com.example.marcos.medicamentalert;
+package com.example.marcos.medicamentalert.fragments;
 
 
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;

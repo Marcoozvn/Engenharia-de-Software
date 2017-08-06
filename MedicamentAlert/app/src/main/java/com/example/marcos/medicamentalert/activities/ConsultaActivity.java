@@ -1,12 +1,10 @@
-package com.example.marcos.medicamentalert;
+package com.example.marcos.medicamentalert.activities;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -14,15 +12,18 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.io.Serializable;
-import java.text.DateFormat;
+import com.example.marcos.medicamentalert.R;
+
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-import models.Consulta;
+import com.example.marcos.medicamentalert.adapters.LineAdapter_Consultas;
+import com.example.marcos.medicamentalert.models.Consulta;
+
+import static android.provider.AlarmClock.EXTRA_MESSAGE;
 
 public class ConsultaActivity extends AppCompatActivity {
 
@@ -30,6 +31,7 @@ public class ConsultaActivity extends AppCompatActivity {
     private static List<Consulta> Consultas;
     private Button btn_horario;
     private Calendar dateTime = Calendar.getInstance();
+    private Intent intent_listagem;
 
     public static List<Consulta> getInstance(){
         if (Consultas == null){
@@ -39,27 +41,14 @@ public class ConsultaActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consulta);
-
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.mytoolbarConsulta);
-        setSupportActionBar(myToolbar);
-        getSupportActionBar().setTitle("Cadastro de Consultas");
-        myToolbar.setNavigationIcon(getResources().getDrawable(R.drawable.ic_clear_white_24dp));
-        myToolbar.setNavigationOnClickListener(listagemOnClickListener);
-
+        getSupportActionBar().setTitle("Cadastro Consulta");
         getInstance();
-    }
 
-    private View.OnClickListener listagemOnClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            finish();
-        }
-    };
+    }
 
     public void salvarConsulta(View view) {
 
@@ -108,11 +97,15 @@ public class ConsultaActivity extends AppCompatActivity {
 
             //criar consulta perfeita
             Consulta nova_consulta = new Consulta(tipo_consulta, horario_consulta, localizacao_consulta, email_consulta, telefone_consulta);
-            Consultas.add(nova_consulta);
-            //voltar pra intent anterior
+            //Consultas.add(nova_consulta);
             //salva no bd
-            //intentMedicamento(view);
+            //listaMedicamentosActivity.bd.salvarConsulta(nova_consulta);
+            //salva no adapter
+            //ListagemConsultas.adapter.guardaConsulta(nova_consulta);
+            intent_listagem = new Intent(this, CadastroMedicamentosActivity.class);
+            intent_listagem.putExtra("Nova_consulta", nova_consulta);
             exibirMensagem("Consulta Salva com Sucesso");
+            //voltar pra intent anterior
             intentListagem(view);
 
         }
@@ -120,7 +113,6 @@ public class ConsultaActivity extends AppCompatActivity {
     }
 
     public void intentListagem(View v){
-        Intent intent_listagem = new Intent(this, ListagemConsultas.class);
         startActivity(intent_listagem);
     }
 
