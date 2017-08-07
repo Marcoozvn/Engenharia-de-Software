@@ -1,5 +1,6 @@
 package com.example.marcos.medicamentalert.bancoDados;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -128,17 +129,19 @@ public class Banco extends SQLiteOpenHelper{
     }
 
 
+    @SuppressLint("LongLogTag")
     public void atualizaMedicamento(Medicamento medicamento){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUNA_NOME, medicamento.getNome());
         values.put(COLUNA_DOSAGEM, medicamento.getDosagem());
         values.put(COLUNA_METRICADOSAGEM, medicamento.getMetricaDosagem());
-        int update = db.update(TABELA_MEDICAMENTOS, values, COLUNA_CODIGO + "= ?", new String[]{String.valueOf(medicamento.getCodigo())});
         int delete =  db.delete(TABELA_HORARIOS, COLUNA_CODIGO + "= ?", new String[]{String.valueOf(medicamento.getCodigo())});
+        int update = db.update(TABELA_MEDICAMENTOS, values, COLUNA_CODIGO + "= ?", new String[]{String.valueOf(medicamento.getCodigo())});
 
         ContentValues values2 = new ContentValues();
         for (String key: medicamento.getAlarmes().keySet()){
+            Log.i("Horário " + key + " inserido no id:", String.valueOf(medicamento.getCodigo()));
             values2.put(COLUNA_HORARIO, key);
             values2.put(COLUNA_STATUS, medicamento.getAlarmes().get(key));
             values2.put(COLUNA_CODIGO, medicamento.getCodigo());
@@ -250,14 +253,9 @@ public class Banco extends SQLiteOpenHelper{
     }
 
 
-    public void deleteTable(){
-        SQLiteDatabase db = this.getWritableDatabase();
-        System.out.print(db.getPath());
-        db.delete(TABELA_MEDICAMENTOS, null, null);
-        db.close();
-    }
-
     public void atualizaTabelaHorario(String horario, int id) {
+        Log.i("Horário para atualizar:", horario);
+        Log.i("No id", String.valueOf(id));
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUNA_STATUS, "true");

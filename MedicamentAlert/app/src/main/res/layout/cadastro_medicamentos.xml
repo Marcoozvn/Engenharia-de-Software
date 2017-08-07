@@ -213,13 +213,24 @@
                     style="?android:attr/borderlessButtonStyle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Adicionar horario"
-                    android:textColor="@color/colorPrimary"
+                    android:layout_alignParentBottom="true"
+                    android:layout_toLeftOf="@id/botaoRemoveHorario_cadastro"
+                    android:text="Adicionar"
                     android:textAllCaps="false"
-                    android:layout_below="@+id/textView_horarioLembrete_cadastro"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"/>
+                    android:textColor="@color/colorPrimary" />
 
+                <Button
+                    android:id="@+id/botaoRemoveHorario_cadastro"
+                    style="?android:attr/borderlessButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Remover"
+                    android:textAllCaps="false"
+                    android:onClick="removeHorario"
+                    android:textColor="@color/colorPrimary"
+                    android:layout_below="@id/textView_horarioLembrete_cadastro"
+                    android:layout_alignParentBottom="true"
+                    android:layout_alignParentEnd="true" />
             </RelativeLayout>
 
         </android.support.constraint.ConstraintLayout>

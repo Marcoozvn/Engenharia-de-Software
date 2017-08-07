@@ -43,7 +43,9 @@ public class AlarmeActivity extends Activity {
             String horario = getIntent().getStringExtra("horario");
             int id = getIntent().getIntExtra("id", 0);
             int count = getIntent().getIntExtra("count", 0);
-            Log.i("Recebido", String.valueOf(id+count));
+            Log.i("Recebido código:", String.valueOf(id+count));
+            Log.i("Recebido id:", String.valueOf(id));
+            Log.i("Recebido count:", String.valueOf(count));
             listaMedicamentosActivity.medicamentoTomado(horario, id);
             Intent i = new Intent(AlarmeActivity.this, ReceptorAlarme.class);
             PendingIntent pi = PendingIntent.getBroadcast(getApplicationContext(), count + id, i, 0);

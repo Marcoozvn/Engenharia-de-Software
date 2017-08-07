@@ -26,18 +26,21 @@ import com.example.marcos.medicamentalert.fragments.TimePickerFragment;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 
 import com.example.marcos.medicamentalert.models.Consulta;
 import com.example.marcos.medicamentalert.models.Medicamento;
 
 public class CadastroMedicamentosActivity extends AppCompatActivity {
-    private int ultimoTextClock = R.id.textClock1;
+    private Stack<Integer> ultimoTextClock;
     private int numTextClocks = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.cadastro_medicamentos);
+        ultimoTextClock = new Stack<Integer>();
+        ultimoTextClock.push(R.id.textClock1);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.mytoolbarCadastro);
         setSupportActionBar(myToolbar);
@@ -90,6 +93,13 @@ public class CadastroMedicamentosActivity extends AppCompatActivity {
         }
     };
 
+    public void removeHorario(View v){
+        if (numTextClocks > 1){
+            RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout);
+            relativeLayout.removeView(findViewById(ultimoTextClock.pop()));
+            numTextClocks--;
+        }
+    }
 
     // ARRUMAR ISSO AQUI! (Tamanho, fonte, padding, posição do botão)
     private View.OnClickListener adicionaHorarioOnClickListener = new View.OnClickListener() {
@@ -99,7 +109,7 @@ public class CadastroMedicamentosActivity extends AppCompatActivity {
                 RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.relativeLayout3);
                 TextView textClockaux = new TextClock(getApplicationContext());
                 RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-                layoutParams.addRule(RelativeLayout.BELOW, ultimoTextClock);
+                layoutParams.addRule(RelativeLayout.BELOW, ultimoTextClock.peek());
                 textClockaux.setLayoutParams(layoutParams);
                 switch (numTextClocks){
                     case 1:
@@ -127,7 +137,7 @@ public class CadastroMedicamentosActivity extends AppCompatActivity {
                 textClockaux.setPadding(0, 0, 0, 8);
                 relativeLayout.addView(textClockaux);
                 textClockaux.setOnClickListener(escolheHorarioOnClickListener);
-                ultimoTextClock = textClockaux.getId();
+                ultimoTextClock.push(textClockaux.getId());
                 numTextClocks++;
             }
         }
@@ -177,7 +187,9 @@ public class CadastroMedicamentosActivity extends AppCompatActivity {
                 listaMedicamentosActivity.adapter.guardaMedicamento(medicamento);
                 Intent intent = getIntent();
                 Consulta consulta = (Consulta) intent.getSerializableExtra("Nova_consulta");
-                listaMedicamentosActivity.bd.salvarConsulta(consulta);
+                if (consulta != null){
+                    listaMedicamentosActivity.bd.salvarConsulta(consulta);
+                }
 
                 Switch switchAlarme = (Switch) findViewById(R.id.switch_acionarAlarme_cadastro);
                 if (switchAlarme.isChecked()){

@@ -27,6 +27,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Stack;
 
 import com.example.marcos.medicamentalert.models.Medicamento;
 
@@ -35,7 +36,7 @@ import com.example.marcos.medicamentalert.models.Medicamento;
  */
 
 public class EdicaoMedicamentosActivity extends AppCompatActivity {
-    private int ultimoTextClock = R.id.textView_horarioLembrete_edicao;
+    private Stack<Integer> ultimoTextClock;
     private int numTextClocks = 0;
     private Medicamento medicamento;
 
@@ -44,6 +45,8 @@ public class EdicaoMedicamentosActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edicao_medicamentos);
+        ultimoTextClock = new Stack<>();
+        ultimoTextClock.push(R.id.textView_horarioLembrete_edicao);
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.mytoolbarEdicao);
         setSupportActionBar(myToolbar);
@@ -104,42 +107,41 @@ public class EdicaoMedicamentosActivity extends AppCompatActivity {
     private void preencheHorarioMedicamento(){
         for (String horario : medicamento.getAlarmes().keySet()) {
             RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.relativeLayoutHorarioLembrete);
-            TextView textClockaux = new TextView(this);
+            TextView viewHorario = new TextView(this);
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            layoutParams.addRule(RelativeLayout.BELOW, ultimoTextClock);
-            textClockaux.setLayoutParams(layoutParams);
+            layoutParams.addRule(RelativeLayout.BELOW, ultimoTextClock.peek());
+            viewHorario.setLayoutParams(layoutParams);
             switch (numTextClocks){
                 case 0:
-                    textClockaux.setId(R.id.textClockEdicao1);
+                    viewHorario.setId(R.id.textClockEdicao1);
                     break;
                 case 1:
-                    textClockaux.setId(R.id.textClockEdicao2);
+                    viewHorario.setId(R.id.textClockEdicao2);
                     break;
                 case 2:
-                    textClockaux.setId(R.id.textClockEdicao3);
+                    viewHorario.setId(R.id.textClockEdicao3);
                     break;
                 case 3:
-                    textClockaux.setId(R.id.textClockEdicao4);
+                    viewHorario.setId(R.id.textClockEdicao4);
                     break;
                 case 4:
-                    textClockaux.setId(R.id.textClockEdicao5);
+                    viewHorario.setId(R.id.textClockEdicao5);
                     break;
                 case 5:
-                    textClockaux.setId(R.id.textClockEdicao6);
+                    viewHorario.setId(R.id.textClockEdicao6);
                     break;
                 case 6:
-                    textClockaux.setId(R.id.textClockEdicao7);
+                    viewHorario.setId(R.id.textClockEdicao7);
                     break;
             }
 
-            textClockaux.setTextAppearance(this, android.R.style.TextAppearance_Large);
-            textClockaux.setTextColor(getResources().getColor(R.color.colorPrimary));
-            textClockaux.setPadding(0, 0, 0, 8);
-            //textClockaux.set
-            textClockaux.setText(horario);
-            relativeLayout.addView(textClockaux);
-            textClockaux.setOnClickListener(escolheHorarioOnClickListener);
-            ultimoTextClock = textClockaux.getId();
+            viewHorario.setTextAppearance(this, android.R.style.TextAppearance_Large);
+            viewHorario.setTextColor(getResources().getColor(R.color.colorPrimary));
+            viewHorario.setPadding(0, 0, 0, 8);
+            viewHorario.setText(horario);
+            relativeLayout.addView(viewHorario);
+            viewHorario.setOnClickListener(escolheHorarioOnClickListener);
+            ultimoTextClock.push(viewHorario.getId());
             numTextClocks++;
         }
     }
@@ -169,9 +171,10 @@ public class EdicaoMedicamentosActivity extends AppCompatActivity {
         view.setForeground(getDrawable(R.color.transparent));
         Switch aSwitch = (Switch) findViewById(R.id.switch_acionarAlarme_edicao);
         Button button = (Button) findViewById(R.id.botaoAdicionaHorario_edicao);
+        Button button2 = (Button) findViewById(R.id.botaoRemoveHorario_edicao);
         button.setEnabled(true);
+        button2.setEnabled(true);
         aSwitch.setEnabled(true);
-
     }
 
     public void editaDosagemMedicamento(View view){
@@ -184,7 +187,7 @@ public class EdicaoMedicamentosActivity extends AppCompatActivity {
             RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.relativeLayoutHorarioLembrete);
             TextClock textClockaux = new TextClock(this);
             RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
-            layoutParams.addRule(RelativeLayout.BELOW, ultimoTextClock);
+            layoutParams.addRule(RelativeLayout.BELOW, ultimoTextClock.peek());
             textClockaux.setLayoutParams(layoutParams);
             switch (numTextClocks) {
                 case 0:
@@ -215,8 +218,16 @@ public class EdicaoMedicamentosActivity extends AppCompatActivity {
             textClockaux.setPadding(0, 0, 0, 8);
             relativeLayout.addView(textClockaux);
             textClockaux.setOnClickListener(escolheHorarioOnClickListener);
-            ultimoTextClock = textClockaux.getId();
+            ultimoTextClock.push(textClockaux.getId());
             numTextClocks++;
+        }
+    }
+
+    public void removeHorario(View v){
+        if (numTextClocks > 1){
+            RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.relativeLayoutHorarioLembrete);
+            relativeLayout.removeView(findViewById(ultimoTextClock.pop()));
+            numTextClocks--;
         }
     }
     private View.OnClickListener adicionaHorarioOnClickListener = v -> adicionaHorario();
