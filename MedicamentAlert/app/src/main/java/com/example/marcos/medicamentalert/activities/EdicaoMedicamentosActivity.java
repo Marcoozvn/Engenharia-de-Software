@@ -23,8 +23,10 @@ import com.example.marcos.medicamentalert.R;
 import com.example.marcos.medicamentalert.fragments.ReceptorAlarme;
 import com.example.marcos.medicamentalert.fragments.TimePickerFragment;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -59,7 +61,10 @@ public class EdicaoMedicamentosActivity extends AppCompatActivity {
         float dosagem = intent.getFloatExtra("Dosagem", 0);
         String metricaDosagem = intent.getStringExtra("metricaDosagem");
         int codigo = intent.getIntExtra("Codigo", 0);
-        medicamento = new Medicamento(nome, dosagem, metricaDosagem);
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HHmmss");
+        String currentDateandTime = sdf.format(new Date()).split("_")[0];
+        //jogar no putextras
+        medicamento = new Medicamento(nome, dosagem, metricaDosagem, currentDateandTime, "nao");
         medicamento.setCodigo(codigo);
         medicamento.setAlarmes(populaMapa(intent.getStringArrayListExtra("Alarmes")));
 
@@ -312,6 +317,7 @@ public class EdicaoMedicamentosActivity extends AppCompatActivity {
         i.putExtra("dosagem", dosagem);
         i.putExtra("metricaDosagem", dosagemMetrica);
         i.putExtra("count", count);
+
         PendingIntent pi = PendingIntent.getBroadcast(this, id + count, i, 0);
         AlarmManager gerenciador = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Calendar cal = Calendar.getInstance();

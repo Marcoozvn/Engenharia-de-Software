@@ -16,11 +16,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.marcos.medicamentalert.adapters.ListAdapter;
 import com.example.marcos.medicamentalert.fragments.MainFragment;
 import com.example.marcos.medicamentalert.R;
 import com.example.marcos.medicamentalert.bancoDados.Banco;
+import com.example.marcos.medicamentalert.models.Medicamento;
 
 /**
  * Created by Marcos on 22/07/2017.
@@ -89,7 +91,7 @@ public class listaMedicamentosActivity extends AppCompatActivity implements Navi
         bd = new Banco(this);
         adapter = new ListAdapter(bd.getMedicamentosNoBanco());
         mRecyclerView.setAdapter(adapter);
-
+       // Toast.makeText(this, bd.getMedicamentosNoBanco().get(0).getData(), Toast.LENGTH_SHORT).show();
         // Configurando um dividr entre linhas, para uma melhor visualização.
         mRecyclerView.addItemDecoration(
                 new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
@@ -174,6 +176,7 @@ public class listaMedicamentosActivity extends AppCompatActivity implements Navi
     //listaDeMedicamentos.setAdapter(adapter);
 
     public static void medicamentoTomado(String horario, int id){
+
         bd.atualizaTabelaHorario(horario, id);
         adapter = new ListAdapter(bd.getMedicamentosNoBanco());
         mRecyclerView.setAdapter(adapter);

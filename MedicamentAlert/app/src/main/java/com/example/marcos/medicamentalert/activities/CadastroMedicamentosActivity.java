@@ -23,7 +23,9 @@ import com.example.marcos.medicamentalert.R;
 import com.example.marcos.medicamentalert.fragments.ReceptorAlarme;
 import com.example.marcos.medicamentalert.fragments.TimePickerFragment;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Stack;
@@ -42,6 +44,8 @@ public class CadastroMedicamentosActivity extends AppCompatActivity {
         setContentView(R.layout.cadastro_medicamentos);
         ultimoTextClock = new Stack<Integer>();
         ultimoTextClock.push(R.id.textClock1);
+
+
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.mytoolbarCadastro);
         setSupportActionBar(myToolbar);
@@ -183,8 +187,10 @@ public class CadastroMedicamentosActivity extends AppCompatActivity {
                 //String nomeMedico = viewNomeMedico.getText().toString();
                 String dosagem = viewDosagem.getText().toString();
                 String dosagemMetrica = spinnerDosagem.getSelectedItem().toString();
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HHmmss");
+                String currentDateandTime = sdf.format(new Date()).split("_")[0];
 
-                Medicamento medicamento = new Medicamento(nomeMedicamento, Float.valueOf(dosagem), dosagemMetrica);
+                Medicamento medicamento = new Medicamento(nomeMedicamento, Float.valueOf(dosagem), dosagemMetrica, currentDateandTime, "nao");
                 Map<String, Boolean> alarmes = new HashMap<>();
                 for (int i = 1; i <= numTextClocks; i++){
                     System.out.print(numTextClocks + " - " + i);
