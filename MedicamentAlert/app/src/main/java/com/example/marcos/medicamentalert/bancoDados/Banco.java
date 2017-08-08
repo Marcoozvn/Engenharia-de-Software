@@ -1,10 +1,13 @@
 package com.example.marcos.medicamentalert.bancoDados;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +23,6 @@ import com.example.marcos.medicamentalert.models.Medicamento;
 public class Banco extends SQLiteOpenHelper{
     private static final int VERSAO_BANCO = 1;
     private static final String BD_MEDICAMENTOS = "bancodeDados709";
-
     //TABELA MEDICAMENTO
     private static final String TABELA_MEDICAMENTOS = "tabela_medicamentos";
     private static final String TABELA_HORARIOS = "tabela_horarios";
@@ -127,17 +129,19 @@ public class Banco extends SQLiteOpenHelper{
     }
 
 
+    @SuppressLint("LongLogTag")
     public void atualizaMedicamento(Medicamento medicamento){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUNA_NOME, medicamento.getNome());
         values.put(COLUNA_DOSAGEM, medicamento.getDosagem());
         values.put(COLUNA_METRICADOSAGEM, medicamento.getMetricaDosagem());
-        int update = db.update(TABELA_MEDICAMENTOS, values, COLUNA_CODIGO + "= ?", new String[]{String.valueOf(medicamento.getCodigo())});
         int delete =  db.delete(TABELA_HORARIOS, COLUNA_CODIGO + "= ?", new String[]{String.valueOf(medicamento.getCodigo())});
+        int update = db.update(TABELA_MEDICAMENTOS, values, COLUNA_CODIGO + "= ?", new String[]{String.valueOf(medicamento.getCodigo())});
 
         ContentValues values2 = new ContentValues();
         for (String key: medicamento.getAlarmes().keySet()){
+            Log.i("Horário " + key + " inserido no id:", String.valueOf(medicamento.getCodigo()));
             values2.put(COLUNA_HORARIO, key);
             values2.put(COLUNA_STATUS, medicamento.getAlarmes().get(key));
             values2.put(COLUNA_CODIGO, medicamento.getCodigo());
@@ -249,19 +253,14 @@ public class Banco extends SQLiteOpenHelper{
     }
 
 
-    public void deleteTable(){
-        SQLiteDatabase db = this.getWritableDatabase();
-        System.out.print(db.getPath());
-        db.delete(TABELA_MEDICAMENTOS, null, null);
-        db.close();
-    }
-
     public void atualizaTabelaHorario(String horario, int id) {
+        Log.i("Horário para atualizar:", horario);
+        Log.i("No id", String.valueOf(id));
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(COLUNA_STATUS, "true");
         int i = db.update(TABELA_HORARIOS, values, COLUNA_CODIGO + "=" + id + " AND " + COLUNA_HORARIO + "= '" + horario + "'", null);
-        System.out.print(i);
+        Log.i("afetados", String.valueOf(i));
         /*
         db.rawQuery("UPDATE " + TABELA_HORARIOS + " SET " + COLUNA_STATUS + " = true WHERE " + COLUNA_CODIGO +
         " = " + id + " AND " + COLUNA_HORARIO + " = " + horario, null);

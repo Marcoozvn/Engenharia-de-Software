@@ -25,8 +25,8 @@
         <activity android:name=".activities.CadastroMedicamentosActivity" android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:theme="@style/Theme.AppCompat.Light.Dialog.MinWidth" android:name=".activities.AlarmeActivity"></activity>
         <activity android:name=".activities.EdicaoMedicamentosActivity" android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".activities.relatorioDiarioActivity" />
-        <activity android:name=".activities.RelatorioSemanalActivity"></activity>
+        <activity android:name=".activities.relatorioDiarioActivity" android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.RelatorioSemanalActivity" android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
