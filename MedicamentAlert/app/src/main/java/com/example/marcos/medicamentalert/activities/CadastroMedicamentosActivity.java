@@ -33,6 +33,7 @@ import com.example.marcos.medicamentalert.models.Medicamento;
 public class CadastroMedicamentosActivity extends AppCompatActivity {
     private int ultimoTextClock = R.id.textClock1;
     private int numTextClocks = 1;
+    private Consulta nova_consulta;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,9 +77,9 @@ public class CadastroMedicamentosActivity extends AppCompatActivity {
     }
 
     public void intent_consulta(View view){
-        Intent intent_consulta = new Intent(this, ConsultaActivity.class);
+        Intent intent_consulta = new Intent(getApplicationContext(), ConsultaActivity.class);
         intent_consulta.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(intent_consulta);
+        startActivityForResult(intent_consulta, 1);
     }
 
     private View.OnClickListener listagemOnClickListener = new View.OnClickListener() {
@@ -141,6 +142,15 @@ public class CadastroMedicamentosActivity extends AppCompatActivity {
         }
     };
 
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode==1 && resultCode==RESULT_OK){
+            nova_consulta = (Consulta) data.getSerializableExtra("Nova_consulta");
+        }
+    }
+
     private View.OnClickListener salvarOnClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -175,9 +185,7 @@ public class CadastroMedicamentosActivity extends AppCompatActivity {
 
                 listaMedicamentosActivity.bd.salvarMedicamento(medicamento);
                 listaMedicamentosActivity.adapter.guardaMedicamento(medicamento);
-                Intent intent = getIntent();
-                Consulta consulta = (Consulta) intent.getSerializableExtra("Nova_consulta");
-                listaMedicamentosActivity.bd.salvarConsulta(consulta);
+                listaMedicamentosActivity.bd.salvarConsulta(nova_consulta);
 
                 Switch switchAlarme = (Switch) findViewById(R.id.switch_acionarAlarme_cadastro);
                 if (switchAlarme.isChecked()){
@@ -187,7 +195,6 @@ public class CadastroMedicamentosActivity extends AppCompatActivity {
                     }
                 }
                 finish();
-
             }
         }
     };

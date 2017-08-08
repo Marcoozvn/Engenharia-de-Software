@@ -28,17 +28,17 @@ import static android.provider.AlarmClock.EXTRA_MESSAGE;
 public class ConsultaActivity extends AppCompatActivity {
 
 
-    private static List<Consulta> Consultas;
+    //private static List<Consulta> Consultas;
     private Button btn_horario;
     private Calendar dateTime = Calendar.getInstance();
     private Intent intent_listagem;
 
-    public static List<Consulta> getInstance(){
-        if (Consultas == null){
-            Consultas = new ArrayList<Consulta>();
-        }
-        return Consultas;
-    }
+//    public static List<Consulta> getInstance(){
+//        if (Consultas == null){
+//            Consultas = new ArrayList<Consulta>();
+//        }
+//        return Consultas;
+//    }
 
 
     @Override
@@ -46,7 +46,7 @@ public class ConsultaActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_consulta);
         getSupportActionBar().setTitle("Cadastro Consulta");
-        getInstance();
+        //getInstance();
 
     }
 
@@ -95,25 +95,27 @@ public class ConsultaActivity extends AppCompatActivity {
                 telefone_consulta    = editText_telefone.getText().toString();
             }
 
-            //criar consulta perfeita
             Consulta nova_consulta = new Consulta(tipo_consulta, horario_consulta, localizacao_consulta, email_consulta, telefone_consulta);
+            intent_listagem = new Intent();
+            intent_listagem.putExtra("Nova_consulta", nova_consulta);
+            setResult(RESULT_OK, intent_listagem);
+            finish();
+
+            //exibirMensagem("Consulta Salva com Sucesso");
+            //criar consulta perfeita
             //Consultas.add(nova_consulta);
             //salva no bd
             //listaMedicamentosActivity.bd.salvarConsulta(nova_consulta);
             //salva no adapter
             //ListagemConsultas.adapter.guardaConsulta(nova_consulta);
-            intent_listagem = new Intent(this, CadastroMedicamentosActivity.class);
-            intent_listagem.putExtra("Nova_consulta", nova_consulta);
-            exibirMensagem("Consulta Salva com Sucesso");
             //voltar pra intent anterior
-            intentListagem(view);
-
+//            intentListagem(view);
         }
 
     }
 
     public void intentListagem(View v){
-        startActivity(intent_listagem);
+        startActivityForResult(intent_listagem, 1);
     }
 
     public void adicionarHorarioConsulta(View v){
