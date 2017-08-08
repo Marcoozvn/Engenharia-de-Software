@@ -81,7 +81,7 @@ public class CadastroMedicamentosActivity extends AppCompatActivity {
 
     public void intent_consulta(View view){
         Intent intent_consulta = new Intent(getApplicationContext(), ConsultaActivity.class);
-        intent_consulta.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        intent_consulta.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivityForResult(intent_consulta, 1);
     }
 
@@ -195,7 +195,9 @@ public class CadastroMedicamentosActivity extends AppCompatActivity {
 
                 listaMedicamentosActivity.bd.salvarMedicamento(medicamento);
                 listaMedicamentosActivity.adapter.guardaMedicamento(medicamento);
-                listaMedicamentosActivity.bd.salvarConsulta(nova_consulta);
+                if (nova_consulta != null){
+                    listaMedicamentosActivity.bd.salvarConsulta(nova_consulta);
+                }
 
                 Switch switchAlarme = (Switch) findViewById(R.id.switch_acionarAlarme_cadastro);
                 if (switchAlarme.isChecked()){

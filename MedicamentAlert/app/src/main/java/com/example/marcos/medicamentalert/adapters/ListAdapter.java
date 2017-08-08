@@ -92,6 +92,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListHolder>{
         notifyItemRangeChanged(position, medicamentoList.size());
     }
 
+
     @Override
     public int getItemCount() {
         return medicamentoList != null ? medicamentoList.size() : 0;

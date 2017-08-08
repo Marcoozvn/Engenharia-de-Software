@@ -21,8 +21,10 @@ import com.example.marcos.medicamentalert.models.Medicamento;
  */
 
 public class Banco extends SQLiteOpenHelper{
+
     private static final int VERSAO_BANCO = 1;
-    private static final String BD_MEDICAMENTOS = "bancodeDados709";
+    private static final String BD_MEDICAMENTOS = "bancodeDados";
+
     //TABELA MEDICAMENTO
     private static final String TABELA_MEDICAMENTOS = "tabela_medicamentos";
     private static final String TABELA_HORARIOS = "tabela_horarios";
@@ -238,6 +240,8 @@ public class Banco extends SQLiteOpenHelper{
         cursor.close();
         return medicamentos;
     }
+
+
     public void removeMedicamento(Medicamento medicamento){
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABELA_HORARIOS, COLUNA_CODIGO + "= ?", new String[]{String.valueOf(medicamento.getCodigo())});

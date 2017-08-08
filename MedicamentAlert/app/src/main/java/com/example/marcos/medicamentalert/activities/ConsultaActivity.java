@@ -28,17 +28,17 @@ import static android.provider.AlarmClock.EXTRA_MESSAGE;
 public class ConsultaActivity extends AppCompatActivity {
 
 
-    //private static List<Consulta> Consultas;
+    private static List<Consulta> Consultas;
     private Button btn_horario;
     private Calendar dateTime = Calendar.getInstance();
     private Intent intent_listagem;
 
-//    public static List<Consulta> getInstance(){
-//        if (Consultas == null){
-//            Consultas = new ArrayList<Consulta>();
-//        }
-//        return Consultas;
-//    }
+    public static List<Consulta> getInstance(){
+        if (Consultas == null){
+            Consultas = new ArrayList<Consulta>();
+        }
+        return Consultas;
+    }
 
 
     @Override
