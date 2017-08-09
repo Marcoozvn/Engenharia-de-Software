@@ -12,14 +12,23 @@ package com.example.marcos.medicamentalert.activities;
         import android.support.v7.widget.RecyclerView;
         import android.support.v7.widget.Toolbar;
         import android.support.design.widget.FloatingActionButton;
+        import android.util.Log;
         import android.view.Menu;
         import android.view.MenuItem;
         import android.view.View;
+        import android.widget.Toast;
 
         import com.example.marcos.medicamentalert.fragments.MainFragment;
         import com.example.marcos.medicamentalert.R;
         import com.example.marcos.medicamentalert.adapters.RelatorioListAdapter;
         import com.example.marcos.medicamentalert.bancoDados.Banco;
+        import com.example.marcos.medicamentalert.models.Medicamento;
+
+        import java.io.Console;
+        import java.text.SimpleDateFormat;
+        import java.util.ArrayList;
+        import java.util.Date;
+        import java.util.List;
 
 /**
  * Created by Marcos on 22/07/2017.
@@ -74,6 +83,15 @@ public class relatorioDiarioActivity extends AppCompatActivity implements Naviga
         //fim navegation viewr
         bd = new Banco(this);
 
+        String medicamento = "dfj";
+        Medicamento medicamentoAtualizado = null;
+        List<Medicamento> medicamentos= bd.getMedicamentosNoBanco();
+        for(int i = 0; i<medicamentos.size(); i++){
+            if(true){
+
+            }
+        }
+
 
 
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_layour_recycler2);
@@ -82,7 +100,20 @@ public class relatorioDiarioActivity extends AppCompatActivity implements Naviga
 
         // Adiciona o adapter que irá anexar os objetos à lista.
         // Está sendo criado com lista vazia, pois será preenchida posteriormente.
-        adapter = new RelatorioListAdapter(bd.getMedicamentosDoDia());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HHmmss");
+        String currentDateandTime = sdf.format(new Date()).split("_")[0];
+        List<Medicamento> medicamentosDoBanco = bd.getMedicamentosNoBanco();
+        List<Medicamento> medicamentosDoDia = new ArrayList<>();
+        
+        for(int i =0; i<medicamentosDoBanco.size(); i++){
+            if(medicamentosDoBanco.get(i).getData().equals(currentDateandTime)){
+
+                medicamentosDoDia.add(medicamentosDoBanco.get(i));
+
+
+            }
+        }
+        adapter = new RelatorioListAdapter(medicamentosDoDia);
         mRecyclerView.setAdapter(adapter);
 
         // Configurando um dividr entre linhas, para uma melhor visualização.

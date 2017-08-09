@@ -15,11 +15,19 @@ import android.support.design.widget.FloatingActionButton;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.marcos.medicamentalert.fragments.MainFragment;
 import com.example.marcos.medicamentalert.R;
 import com.example.marcos.medicamentalert.adapters.RelatorioListAdapter;
 import com.example.marcos.medicamentalert.bancoDados.Banco;
+import com.example.marcos.medicamentalert.models.Medicamento;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Marcos on 22/07/2017.
@@ -73,14 +81,34 @@ public class RelatorioSemanalActivity extends AppCompatActivity implements Navig
         bd = new Banco(this);
 
 
-
         RecyclerView mRecyclerView = (RecyclerView) findViewById(R.id.recycler_view_layour_recycler3);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
 
         // Adiciona o adapter que irá anexar os objetos à lista.
         // Está sendo criado com lista vazia, pois será preenchida posteriormente.
-        adapter = new RelatorioListAdapter(bd.getMedicamentosDaSemana());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HHmmss");
+        String currentDateandTime = sdf.format(new Date()).split("_")[0];
+        List<Medicamento> medicamentosDoBanco = bd.getMedicamentosNoBanco();
+        List<Medicamento> medicamentosDaSemana = new ArrayList<>();
+
+        for(int i =0; i<medicamentosDoBanco.size(); i++){
+            long diferencaDias = 0;
+            try{
+                SimpleDateFormat conversorData = new SimpleDateFormat("yyyy-MM-dd");
+                Date dataDe = conversorData.parse(medicamentosDoBanco.get(i).getData());
+                Date dataAte = conversorData.parse(currentDateandTime);
+                diferencaDias = (dataAte.getTime() - dataDe.getTime()) / (1000*60*60*24);
+            }catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            if(diferencaDias<=7){
+                medicamentosDaSemana.add(medicamentosDoBanco.get(i));
+
+            }
+        }
+        adapter = new RelatorioListAdapter(medicamentosDaSemana);
         mRecyclerView.setAdapter(adapter);
 
         // Configurando um dividr entre linhas, para uma melhor visualização.

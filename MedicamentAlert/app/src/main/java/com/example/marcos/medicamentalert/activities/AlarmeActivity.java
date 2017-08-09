@@ -17,10 +17,14 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.marcos.medicamentalert.R;
+import com.example.marcos.medicamentalert.bancoDados.Banco;
 import com.example.marcos.medicamentalert.fragments.ReceptorAlarme;
+import com.example.marcos.medicamentalert.models.Medicamento;
+
+import java.util.List;
 
 public class AlarmeActivity extends Activity {
-
+    public static Banco bd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,10 +32,19 @@ public class AlarmeActivity extends Activity {
 
         Button botaoTomar = (Button) findViewById(R.id.botaoTomar);
         botaoTomar.setOnClickListener(tomarOnClickListener);
-
+        bd = new Banco(this);
         NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         nm.cancel(1);
         String medicamento = getIntent().getStringExtra("nomeMedicamento");
+        Medicamento medicamentoAtualizado = null;
+        List<Medicamento> medicamentos= bd.getMedicamentosNoBanco();
+        for(int i = 0; i<medicamentos.size(); i++){
+            if(medicamentos.get(i).getNome().equals(medicamento)){
+                medicamentoAtualizado = medicamentos.get(i);
+                medicamentoAtualizado.setSituacaoTomado("sim");
+            }
+        }
+        bd.atualizaMedicamento(medicamentoAtualizado);
         ((TextView)findViewById(R.id.nomeMedicamentoCaixaAlarme)).setText(medicamento);
         String dosagem = "" + getIntent().getFloatExtra("dosagem", 0) + getIntent().getStringExtra("metricaDosagem");
         ((TextView)findViewById(R.id.dosagemCaixaAlarme)).setText(dosagem);

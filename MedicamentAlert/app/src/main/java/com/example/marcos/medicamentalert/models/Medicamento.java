@@ -14,14 +14,18 @@ public class Medicamento {
     private float dosagem;
     private String metricaDosagem;
     private Map<String, Boolean> alarmes;
-
-    public Medicamento(String nome, float dosagem, String metricaDosagem){
+    private String data;
+    private String situacaoTomado;
+    public Medicamento(String nome, float dosagem, String metricaDosagem, String data, String situacaoTomado){
         this.nome = nome;
         //this.medicoResponsavel = medicoResponsavel;
         this.dosagem = dosagem;
         this.alarmes = new HashMap<>();
         this.metricaDosagem = metricaDosagem;
+        this.data = data;
+        this.situacaoTomado=situacaoTomado;
     }
+
 
     public String getNome(){ return nome;}
 
@@ -30,17 +34,20 @@ public class Medicamento {
     public float getDosagem(){return dosagem;}
 
     public String getMetricaDosagem(){ return metricaDosagem;}
-
+    public String getData(){return data;}
     public int getCodigo(){return codigo;}
 
     public void setCodigo(int codigo){
         this.codigo = codigo;
     }
-
+    public void setData(){this.data = data;}
     public void setAlarmes(Map<String, Boolean> alarmes){
         this.alarmes = alarmes;
     }
 
+    public void setSituacaoTomado(String situacao){this.situacaoTomado = situacao;}
+
+    public String getSituacaoTomado(){return this.situacaoTomado;}
     public void setNome(String nome){
         this.nome = nome;
     }
@@ -53,9 +60,7 @@ public class Medicamento {
         this.metricaDosagem = metricaDosagem;
     }
 
-    public void tomouMedicamento(String horario){
-        alarmes.replace(horario, false, true);
-    }
+
 
     public Map<String, Boolean> getAlarmes(){
         return  this.alarmes;

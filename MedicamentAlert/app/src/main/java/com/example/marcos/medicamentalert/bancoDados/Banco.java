@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,6 +35,8 @@ public class Banco extends SQLiteOpenHelper{
     private static final String COLUNA_METRICADOSAGEM = "metricaDosagem";
     private static final String COLUNA_HORARIO = "horario";
     private static final String COLUNA_STATUS = "status";
+    private static final String COLUNA_DATA = "data";
+    private static final String COLUNA_SITUACAO = "situacao";
 
     //TABELA CONSULTA
     private static final String     TABELA_CONSULTA = "tabela_consultas";
@@ -73,6 +76,8 @@ public class Banco extends SQLiteOpenHelper{
                 COLUNA_CODIGO + " INTEGER PRIMARY KEY, " +
                 COLUNA_NOME + " TEXT, " +
                 COLUNA_DOSAGEM + " FLOAT, " +
+                COLUNA_DATA + " TEXT, " +
+                COLUNA_SITUACAO + " TEXT, " +
                 COLUNA_METRICADOSAGEM + " TEXT)";
         return QUERY_COLUNA;
     }
@@ -105,6 +110,8 @@ public class Banco extends SQLiteOpenHelper{
         values.put(COLUNA_NOME, medicamento.getNome());
         values.put(COLUNA_DOSAGEM, medicamento.getDosagem());
         values.put(COLUNA_METRICADOSAGEM, medicamento.getMetricaDosagem());
+        values.put(COLUNA_DATA, medicamento.getData());
+        values.put(COLUNA_SITUACAO, medicamento.getSituacaoTomado());
         values.put(COLUNA_CODIGO, medicamento.hashCode());
         long insert1 = db.insert(TABELA_MEDICAMENTOS, null, values);
         ContentValues values2 = new ContentValues();
@@ -138,6 +145,10 @@ public class Banco extends SQLiteOpenHelper{
         values.put(COLUNA_NOME, medicamento.getNome());
         values.put(COLUNA_DOSAGEM, medicamento.getDosagem());
         values.put(COLUNA_METRICADOSAGEM, medicamento.getMetricaDosagem());
+        values.put(COLUNA_DATA, medicamento.getData());
+
+        values.put(COLUNA_SITUACAO, medicamento.getSituacaoTomado());
+        Log.d(medicamento.getSituacaoTomado(), String.valueOf(medicamento.getCodigo()));
         int delete =  db.delete(TABELA_HORARIOS, COLUNA_CODIGO + "= ?", new String[]{String.valueOf(medicamento.getCodigo())});
         int update = db.update(TABELA_MEDICAMENTOS, values, COLUNA_CODIGO + "= ?", new String[]{String.valueOf(medicamento.getCodigo())});
 
@@ -147,8 +158,10 @@ public class Banco extends SQLiteOpenHelper{
             values2.put(COLUNA_HORARIO, key);
             values2.put(COLUNA_STATUS, medicamento.getAlarmes().get(key));
             values2.put(COLUNA_CODIGO, medicamento.getCodigo());
+            values2.put(COLUNA_CODIGO, medicamento.getCodigo());
             long insert = db.insert(TABELA_HORARIOS, null, values2);
         }
+
         db.close();
     }
 
@@ -160,8 +173,13 @@ public class Banco extends SQLiteOpenHelper{
             int id = cursor.getInt(cursor.getColumnIndex(COLUNA_CODIGO));
             String nome = cursor.getString(cursor.getColumnIndex(COLUNA_NOME));
             float dosagem = cursor.getFloat(cursor.getColumnIndex(COLUNA_DOSAGEM));
+            String data = cursor.getString(cursor.getColumnIndex(COLUNA_DATA));
+            String tomado = cursor.getString(cursor.getColumnIndex(COLUNA_SITUACAO));
             String metricaDosagem = cursor.getString(cursor.getColumnIndex(COLUNA_METRICADOSAGEM));
-            Medicamento medicamento = new Medicamento(nome, dosagem, metricaDosagem);
+
+
+
+            Medicamento medicamento = new Medicamento(nome, dosagem, metricaDosagem, data, tomado);
             medicamento.setCodigo(id);
             Cursor cursor1 = this.getWritableDatabase().rawQuery("SELECT horario, status FROM tabela_horarios WHERE " +
                     "tabela_horarios._id = " + String.valueOf(id), null);
@@ -208,38 +226,7 @@ public class Banco extends SQLiteOpenHelper{
 
 
 
-    public List<Medicamento> getMedicamentosDoDia(){
-        List<Medicamento> medicamentos = new ArrayList<>();
-        Cursor cursor = this.getWritableDatabase().rawQuery("SELECT * FROM " + TABELA_MEDICAMENTOS, null);
-        while (cursor.moveToNext()){
-            int id = cursor.getInt(cursor.getColumnIndex(COLUNA_CODIGO));
-            String nome = cursor.getString(cursor.getColumnIndex(COLUNA_NOME));
-            float dosagem = cursor.getFloat(cursor.getColumnIndex(COLUNA_DOSAGEM));
-            String metricaDosagem = cursor.getString(cursor.getColumnIndex(COLUNA_METRICADOSAGEM));
-            Medicamento medicamento = new Medicamento(nome, dosagem, metricaDosagem);
-            medicamento.setCodigo(id);
-            medicamentos.add(medicamento);
-        }
-        cursor.close();
-        return medicamentos;
-    }
 
-    public List<Medicamento> getMedicamentosDaSemana(){
-        List<Medicamento> medicamentos = new ArrayList<>();
-        Cursor cursor = this.getWritableDatabase().rawQuery("SELECT * FROM " + TABELA_MEDICAMENTOS, null);
-        while (cursor.moveToNext()){
-            int id = cursor.getInt(cursor.getColumnIndex(COLUNA_CODIGO));
-            String nome = cursor.getString(cursor.getColumnIndex(COLUNA_NOME));
-            float dosagem = cursor.getFloat(cursor.getColumnIndex(COLUNA_DOSAGEM));
-            String metricaDosagem = cursor.getString(cursor.getColumnIndex(COLUNA_METRICADOSAGEM));
-
-            Medicamento medicamento = new Medicamento(nome, dosagem, metricaDosagem);
-            medicamento.setCodigo(id);
-            medicamentos.add(medicamento);
-        }
-        cursor.close();
-        return medicamentos;
-    }
 
 
     public void removeMedicamento(Medicamento medicamento){
