@@ -44,6 +44,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListHolder>{
         }
         //holder.nomeMedicamento.setText(aux);
         holder.nomeMedicamento.setText(medicamentoList.get(position).getNome());
+        holder.dosagemMedicamento.setText(medicamentoList.get(position).getDosagem() + " " + medicamentoList.get(position).getMetricaDosagem());
         holder.infoMedicamento.setOnClickListener(view -> editaItem(position));
         holder.deletaMedicamento.setOnClickListener(view -> removerItem(position));
     }

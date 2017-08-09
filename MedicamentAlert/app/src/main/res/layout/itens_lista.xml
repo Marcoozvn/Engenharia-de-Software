@@ -13,8 +13,16 @@
         android:layout_height="wrap_content"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
         android:text="TextView"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/dosagemMedicamento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop = "8dp"
+        android:text="Dosagem"
+        android:layout_alignBottom="@+id/infoMedicamento"
         android:layout_alignParentStart="true" />
 
     <ImageButton

@@ -24,7 +24,7 @@ import com.example.marcos.medicamentalert.models.Medicamento;
 public class Banco extends SQLiteOpenHelper{
 
     private static final int VERSAO_BANCO = 1;
-    private static final String BD_MEDICAMENTOS = "bancodeDados";
+    private static final String BD_MEDICAMENTOS = "bancodeDadosAplicacao";
 
     //TABELA MEDICAMENTO
     private static final String TABELA_MEDICAMENTOS = "tabela_medicamentos";

@@ -31,6 +31,7 @@ public class RelatorioListAdapter extends RecyclerView.Adapter<RelatorioListHold
     @Override
     public void onBindViewHolder(RelatorioListHolder holder, int position) {
         holder.nomeMedicamento.setText(medicamentoList.get(position).getNome());
+        //holder.horarioMedicamento.setText(medicamentoList.get(position).getAlarmes().keySet().toArray()[0].toString());
         if(medicamentoList.get(position).getSituacaoTomado().equals("nao")){
             holder.deletaMedicamento.setImageResource(R.drawable.ic_wrong_red_24dp);
         }else{

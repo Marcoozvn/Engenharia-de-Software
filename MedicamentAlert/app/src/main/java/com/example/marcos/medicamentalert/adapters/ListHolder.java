@@ -13,12 +13,14 @@ import com.example.marcos.medicamentalert.R;
 
 public class ListHolder extends RecyclerView.ViewHolder {
     public TextView nomeMedicamento;
+    public TextView dosagemMedicamento;
     public ImageButton infoMedicamento;
     public ImageButton deletaMedicamento;
 
     public ListHolder(View itemView) {
         super(itemView);
         this.nomeMedicamento = (TextView) itemView.findViewById(R.id.nomeMedicamento);
+        this.dosagemMedicamento = (TextView) itemView.findViewById(R.id.dosagemMedicamento);
         this.infoMedicamento = (ImageButton) itemView.findViewById(R.id.infoMedicamento);
         this.deletaMedicamento = (ImageButton) itemView.findViewById(R.id.deletaMedicamento);
     }

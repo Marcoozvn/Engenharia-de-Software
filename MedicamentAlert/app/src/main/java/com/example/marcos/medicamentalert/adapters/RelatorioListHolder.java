@@ -13,13 +13,13 @@ import com.example.marcos.medicamentalert.R;
 
 public class RelatorioListHolder extends RecyclerView.ViewHolder {
     public TextView nomeMedicamento;
-
+    public TextView horarioMedicamento;
     public ImageButton deletaMedicamento;
 
     public RelatorioListHolder(View itemView) {
         super(itemView);
         this.nomeMedicamento = (TextView) itemView.findViewById(R.id.nomeMedicamento2);
-
+        this.horarioMedicamento = (TextView) itemView.findViewById(R.id.horarioMedicamento);
         this.deletaMedicamento = (ImageButton) itemView.findViewById(R.id.statusMedicamento);
     }
 }

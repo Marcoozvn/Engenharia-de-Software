@@ -32,6 +32,7 @@ public class LineAdapter_Consultas extends RecyclerView.Adapter<LineHolder_Consu
     @Override
     public void onBindViewHolder(LineHolder_Consultas holder, final int position) {
         holder.tipo_consulta.setText(String.format(mConsulta.get(position).getTipoConsulta()));
+        holder.data_consulta.setText(mConsulta.get(position).getHorarioConsulta());
         holder.icone_excluir.setOnClickListener(v -> removerItem(position));
 
     }
