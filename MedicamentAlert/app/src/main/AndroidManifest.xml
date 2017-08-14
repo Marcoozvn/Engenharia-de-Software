@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.marcos.medicamentalert">
+
+    <application
+        android:debuggable="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="Medicament Alert"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".activities.listaMedicamentosActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <receiver android:name=".fragments.ReceptorAlarme" />
+        <activity android:name=".activities.ConsultaActivity" />
+        <activity android:name=".activities.ListagemConsultas"></activity>
+        <activity android:name=".activities.CadastroMedicamentosActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:theme="@style/Theme.AppCompat.Light.Dialog.MinWidth" android:name=".activities.AlarmeActivity"></activity>
+        <activity android:name=".activities.EdicaoMedicamentosActivity" android:theme="@style/AppTheme.NoActionBar"/>
+        <activity android:name=".activities.relatorioDiarioActivity" android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.RelatorioSemanalActivity" android:theme="@style/AppTheme.NoActionBar"></activity>
+    </application>
+
+</manifest>
